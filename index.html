@@ -22,23 +22,23 @@
                 </div>
                 <div class="header-right">
                     <label for="searchField">Cerca un film</label>
-                    <input id="searchField" type="text" placeholder="Scrivi qui..">
-                    <button>Cerca</button>
+                    <input id="searchField" v-model="searchQuery" type="text" placeholder="Scrivi qui..">
+                    <button @click="getQueryByInput()">Cerca</button>
                 </div>
             </header>
 
             <main>
-                <a href="#" class="movie-container">
-                    <img :src="poster" alt="locandina film" class="img100">
+                <a v-for="movie in movies" href="#" class="movie">
+                    <img :src="poster + movie.backdrop_path" :alt="'locandina ' + movie.original_title" class="img100">
                     <div class="layover">
                         <ul>
                             <li>
                                 <strong>Titolo:</strong>
-                                Interstellar
+                                {{ movie.title }}
                             </li>
                             <li>
                                 <strong>Titolo originale:</strong>
-                                Interstellar
+                                {{ movie.original_title }}
                             </li>
                             <li>
                                 <strong>Voto:</strong>
@@ -48,9 +48,9 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                             </li>
-                            <li class="overview">
+                            <li>
                                 <strong>Trama:</strong>
-                                In seguito alla scoperta di un cunicolo spazio-temporale, un gruppo di esploratori si avventura in una eroica missione per tentare di superare i limiti della conquista spaziale e oltrepassare le distanze che fino a quel momento avevano reso impraticabili i viaggi interstellari. L'obiettivo è quello di trovare nuovi luoghi dove coltivare il granoturco, l'unica coltivazione rimasta dopo un drastico cambiamento climatico che ha colpito soprattutto l'agricoltura.
+                                {{ movie.overview }}
                             </li>
                         </ul>
                     </div>
