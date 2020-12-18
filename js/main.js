@@ -27,7 +27,8 @@ let app = new Vue (
                 } );
 
                 this.searchQuery = '';
-            }
+            },
+
         },
     }
 );

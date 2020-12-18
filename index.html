@@ -37,7 +37,7 @@
                                 <strong>Titolo:</strong>
                                 {{ movie.title }}
                             </li>
-                            <li>
+                            <li v-if="movie.original_title != movie.title">
                                 <strong>Titolo originale:</strong>
                                 {{ movie.original_title }}
                             </li>
@@ -45,15 +45,11 @@
                                 <strong>Lingua:</strong>
                                 {{ movie.original_language }}
                             </li>
-                            <li>
+                            <li v-if="movie.vote_average != 0">
                                 <strong>Voto:</strong>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                                <i v-for="vote in Math.round(movie.vote_average / 2)" class="fas fa-star"></i>
                             </li>
-                            <li>
+                            <li v-if="movie.overview != ''">
                                 <strong>Trama:</strong>
                                 {{ movie.overview }}
                             </li>
