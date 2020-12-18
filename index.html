@@ -23,13 +23,14 @@
                 <div class="header-right">
                     <label for="searchField">Cerca un film</label>
                     <input id="searchField" v-model="searchQuery" type="text" placeholder="Scrivi qui..">
-                    <button @click="getQueryByInput()">Cerca</button>
+                    <button @click="getQueryByInput">Cerca</button>
                 </div>
             </header>
 
             <main>
                 <a v-for="movie in movies" href="#" class="movie">
-                    <img :src="poster + movie.backdrop_path" :alt="'locandina ' + movie.original_title" class="img100">
+                    <img v-if="movie.backdrop_path == undefined" src="img/img-not-available.png" alt="not available" class="img100">
+                    <img v-else :src="poster + movie.backdrop_path" :alt="'locandina ' + movie.original_title" class="img100">
                     <div class="layover">
                         <ul>
                             <li>
@@ -39,6 +40,10 @@
                             <li>
                                 <strong>Titolo originale:</strong>
                                 {{ movie.original_title }}
+                            </li>
+                            <li>
+                                <strong>Lingua:</strong>
+                                {{ movie.original_language }}
                             </li>
                             <li>
                                 <strong>Voto:</strong>
