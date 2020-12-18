@@ -52,10 +52,14 @@ header {
 .header-left {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 220px;
     height: 100%;
-    padding: 10px;
 }
+.header-left  img {
+    max-width: 150px;
+}
+
 .header-right {
     width: calc(100% - 100px);
     height: 100%;
@@ -66,7 +70,6 @@ header {
 
 main {
     display: flex;
-    justify-content: flex-start;
     flex-wrap: wrap;
     height: calc(100vh - 70px);
     margin-top: 70px;
@@ -104,7 +107,7 @@ main {
 }
 
 .layover li:last-child {
-    max-height: 300px;
+    max-height: 350px;
     padding-bottom: 20px;
     overflow: auto;
 }
