@@ -13,6 +13,27 @@
     <body>
 
         <div id="app" class="wrapper">
+
+            <header>
+                <div class="header-left">
+                    <a href="#">
+                        <img src="img/netflix-logo-completo.png" alt="logo netflix" class="img100">
+                    </a>
+                </div>
+                <div class="header-right">
+                    <label for="searchField">Cerca un film</label>
+                    <input id="searchField" type="text" placeholder="Scrivi qui..">
+                    <button>Cerca</button>
+                </div>
+            </header>
+
+            <main>
+                <div class="movie-container">
+                    <img :src="poster" alt="locandina film" class="img100">
+                </div>
+
+            </main>
+
         </div>
 
         <script src="js/main.js" charset="utf-8"></script>
