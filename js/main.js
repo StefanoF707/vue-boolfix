@@ -9,6 +9,7 @@ let app = new Vue (
             query: "",
             searchQuery: "",
             openSearchField: false,
+            noImgFound: "img/img-not-available.png"
         },
         methods: {
             getQueryByInput: function () {

@@ -46,15 +46,13 @@
                             <li><i class="fas fa-bell"></i></li>
                             <li class="avatar"><img src="img/avatar.png" alt="foto profilo account" class="img100"></li>
                         </ul>
-
                     </nav>
                 </div>
             </header>
 
             <main>
                 <a v-for="movie in movies" href="#" class="movie">
-                    <img v-if="movie.backdrop_path == undefined" src="img/img-not-available.png" alt="not available" class="img100">
-                    <img v-else :src="poster + movie.backdrop_path" :alt="'locandina ' + movie.original_title" class="img100">
+                    <img :src="(movie.backdrop_path != undefined) ? poster + movie.backdrop_path : noImgFound" :alt="'locandina ' + movie.original_title" class="img100">
                     <div class="layover">
                         <ul>
                             <li>
