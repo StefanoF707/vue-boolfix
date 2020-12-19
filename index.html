@@ -21,9 +21,33 @@
                     </a>
                 </div>
                 <div class="header-right">
-                    <label for="searchField">Cerca un film</label>
-                    <input id="searchField" v-model="searchQuery" type="text" placeholder="Scrivi qui.." @keyup.enter="getQueryByInput">
-                    <button @click="getQueryByInput">Cerca</button>
+                    <nav class="header-right-nav">
+                        <ul class="list-inline">
+                            <li class="active-page">Home</li>
+                            <li>Serie TV</li>
+                            <li>Film</li>
+                            <li>Nuovi e popolari</li>
+                            <li>La mia lista</li>
+                        </ul>
+                    </nav>
+                    <nav class="header-right-buttons">
+                        <ul class="list-inline">
+                            <li>
+                                <div id="search-field" v-if="openSearchField">
+                                    <input v-model="searchQuery" type="text" placeholder="Titolo del film" @keyup.enter="getQueryByInput">
+                                    <button id="search-btn" @click="getQueryByInput">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button id="closer-btn" @click="openSearchField = false"><i class="fas fa-times"></i></button>
+                                </div>
+                                <i class="fas fa-search" v-else @click="openSearchField = true"></i>
+                            </li>
+                            <li><i class="fas fa-gift"></i></li>
+                            <li><i class="fas fa-bell"></i></li>
+                            <li class="avatar"><img src="img/avatar.png" alt="foto profilo account" class="img100"></li>
+                        </ul>
+
+                    </nav>
                 </div>
             </header>
 

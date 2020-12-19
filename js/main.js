@@ -2,12 +2,13 @@ let app = new Vue (
     {
         el: "#app",
         data: {
-            movies: [],
-            query: "",
-            searchQuery: "",
             my_api_key: "abe738a72b875634baa4e3568faa8280",
             poster: "https://image.tmdb.org/t/p/w220_and_h330_face",
             pages: 1,
+            movies: [],
+            query: "",
+            searchQuery: "",
+            openSearchField: false,
         },
         methods: {
             getQueryByInput: function () {
