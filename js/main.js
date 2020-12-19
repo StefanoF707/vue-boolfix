@@ -32,24 +32,3 @@ let app = new Vue (
         },
     }
 );
-
-
-
-// "adult": false,
-//             "backdrop_path": "/xJHokMbljvjADYdit5fK5VQsXEG.jpg",
-//             "genre_ids": [
-//                 12,
-//                 18,
-//                 878
-//             ],
-//             "id": 157336,
-//             "original_language": "en",
-//             "original_title": "Interstellar",
-//             "overview": "In seguito alla scoperta di un cunicolo spazio-temporale, un gruppo di esploratori si avventura in una eroica missione per tentare di superare i limiti della conquista spaziale e oltrepassare le distanze che fino a quel momento avevano reso impraticabili i viaggi interstellari. L'obiettivo è quello di trovare nuovi luoghi dove coltivare il granoturco, l'unica coltivazione rimasta dopo un drastico cambiamento climatico che ha colpito soprattutto l'agricoltura.",
-//             "popularity": 80.378,
-//             "poster_path": "/bMKiLh0mES4Uiococ240lbbTGXQ.jpg",
-//             "release_date": "2014-11-05",
-//             "title": "Interstellar",
-//             "video": false,
-//             "vote_average": 8.3,
-//             "vote_count": 24453

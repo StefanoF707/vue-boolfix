@@ -22,7 +22,7 @@
                 </div>
                 <div class="header-right">
                     <label for="searchField">Cerca un film</label>
-                    <input id="searchField" v-model="searchQuery" type="text" placeholder="Scrivi qui..">
+                    <input id="searchField" v-model="searchQuery" type="text" placeholder="Scrivi qui.." @keyup.enter="getQueryByInput">
                     <button @click="getQueryByInput">Cerca</button>
                 </div>
             </header>
@@ -49,7 +49,7 @@
                                 <strong>Voto:</strong>
                                 <i v-for="vote in Math.round(movie.vote_average / 2)" class="fas fa-star"></i>
                             </li>
-                            <li v-if="movie.overview != ''">
+                            <li v-if="movie.overview != ''" class="overview">
                                 <strong>Trama:</strong>
                                 {{ movie.overview }}
                             </li>
