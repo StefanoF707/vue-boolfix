@@ -26,7 +26,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: bottom;
+    object-position: top;
 }
 
 ul {
@@ -162,12 +162,10 @@ main {
     flex-wrap: wrap;
     height: calc(100vh - 70px);
     margin-top: 70px;
-    padding: 10px 20px;
     overflow: auto;
 }
 
 .movie {
-    display: inline-block;
     width: calc(100% / 4 - 40px);
     position: relative;
     margin: 10px 20px;

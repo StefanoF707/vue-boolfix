@@ -5,11 +5,11 @@ let app = new Vue (
             my_api_key: "abe738a72b875634baa4e3568faa8280",
             poster: "https://image.tmdb.org/t/p/w220_and_h330_face",
             pages: 1,
+            noImgFound: "img/img-not-available.png",
             movies: [],
             query: "",
             searchQuery: "",
             openSearchField: false,
-            noImgFound: "img/img-not-available.png"
         },
         methods: {
             getQueryByInput: function () {
