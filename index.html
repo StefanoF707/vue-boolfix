@@ -51,7 +51,7 @@
             </header>
 
             <main v-if="query != ''">
-                <a href="#" v-if="movies.results != []" v-for="movie in movies" class="movie">
+                <a href="#" v-for="movie in movies" class="movie">
                     <img :src="(movie.backdrop_path != undefined) ? poster + movie.backdrop_path : noImgFound" :alt="'locandina ' + movie.original_title" class="img100">
                     <div class="layover">
                         <ul>
