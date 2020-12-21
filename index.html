@@ -52,7 +52,7 @@
 
             <main v-if="query != ''">
                 <a href="#" v-for="movie in movies" class="movie">
-                    <img :src="(movie.backdrop_path != undefined) ? poster + movie.backdrop_path : noImgFound" :alt="'locandina ' + movie.original_title" class="img100">
+                    <img :src="(movie.poster_path != undefined) ? poster + movie.poster_path : noImgFound" :alt="'locandina ' + movie.original_title" class="img100">
                     <div class="layover">
                         <ul>
                             <li>
@@ -69,7 +69,7 @@
                             </li>
                             <li v-if="movie.vote_average != 0">
                                 <strong>Voto:</strong>
-                                <i v-for="vote in Math.round(movie.vote_average / 2)" class="fas fa-star"></i>
+                                <i v-for="vote in Math.ceil(movie.vote_average / 2)" class="fas fa-star"></i>
                             </li>
                             <li v-if="movie.overview != ''" class="overview">
                                 <strong>Trama:</strong>
