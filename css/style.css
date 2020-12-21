@@ -166,7 +166,7 @@ main {
 }
 
 .movie {
-    width: 400px;
+    width: calc(100% / 3 - 40px);
     position: relative;
     margin: 10px 20px;
     font-size: 0;
