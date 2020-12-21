@@ -185,8 +185,6 @@ main {
     right: 10px;
 }
 
-
-
 .movie > .layover {
     position: absolute;
     top: 0;
@@ -206,6 +204,11 @@ main {
 
 .layover li {
     margin-bottom: 10px;
+}
+
+.layover li.language > img {
+    width: 25px;
+    vertical-align: middle;
 }
 
 .layover li.rating {

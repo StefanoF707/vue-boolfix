@@ -25,6 +25,17 @@ let app = new Vue (
                 })
                 .then( (response) => {
                     this.movies = response.data.results;
+                    this.movies.forEach( (element) => {
+                        if (element.original_language == "en") {
+                            element.original_language = "img/icons/usa.png";
+                        } else if (element.original_language == "it") {
+                            element.original_language = "img/icons/italy.png";
+                        } else if (element.original_language == "de") {
+                            element.original_language = "img/icons/germany.png";
+                        } else if (element.original_language == "fr") {
+                            element.original_language = "img/icons/france.png";
+                        }
+                    } );
                     console.log(this.movies);
                 } );
 
