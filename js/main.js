@@ -3,7 +3,7 @@ let app = new Vue (
         el: "#app",
         data: {
             my_api_key: "abe738a72b875634baa4e3568faa8280",
-            poster: "https://image.tmdb.org/t/p/w342",
+            poster: "https://image.tmdb.org/t/p/w780",
             pages: 1,
             noImgFound: "img/img-not-available.png",
             movies: [],
