@@ -50,7 +50,7 @@ let app = new Vue (
                     console.log(this.movies);
                 } );
 
-                this.searchQuery = '';
+                this.searchQuery = "";
             },
             moveActiveClass: function (i) {
                 this.indexActive = i;

@@ -48,7 +48,7 @@
                 </div>
             </header>
 
-            <main v-if="query != ''">
+            <main v-if="movies.length != 0">
                 <a href="#" v-for="movie in movies" class="movie">
                     <img :src="(movie.poster_path != undefined) ? poster + movie.poster_path : noImgFound" :alt="'locandina ' + movie.original_title" class="img100">
                     <div class="layover">
@@ -80,7 +80,9 @@
                 </a>
             </main>
             <main v-else>
-                <img src="img/bcs-jumbotron.jpg" alt="" class="img100">
+                <img v-if="indexActive == 1" src="img/bcs-jumbotron.jpg" alt="jumbotron" class="img100">
+                <img v-else-if="indexActive == 2" src="img/interstellar-jumbotron.jpg" alt="jumbotron" class="img100">
+                <img v-else src="img/netflix-jumbotron.jpg" alt="jumbotron" class="img100">
             </main>
 
         </div>
