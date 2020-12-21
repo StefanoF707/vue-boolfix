@@ -23,9 +23,7 @@
                 <div class="header-right">
                     <nav class="header-right-nav">
                         <ul class="list-inline">
-                            <li class="active-page">Home</li>
-                            <li>Serie TV</li>
-                            <li>Film</li>
+                            <li v-for="(type, index) in showTypes" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">{{ type }}</li>
                             <li>Nuovi e popolari</li>
                             <li>La mia lista</li>
                         </ul>
@@ -57,11 +55,11 @@
                         <ul>
                             <li>
                                 <strong>Titolo:</strong>
-                                {{ movie.title }}
+                                {{ movie.title || movie.name }}
                             </li>
-                            <li v-if="movie.original_title != movie.title">
+                            <li v-if="movie.original_title != movie.title || movie.original_name != movie.name">
                                 <strong>Titolo originale:</strong>
-                                {{ movie.original_title }}
+                                {{ movie.original_title || movie.original_name }}
                             </li>
                             <li class="language">
                                 <strong>Lingua:</strong>
@@ -69,7 +67,7 @@
                                 <span v-else>{{ movie.original_language }}</span>
                             </li>
                             <li v-if="movie.vote_average != 0" class="rating">
-                                <strong>Voto:</strong>
+                                <strong>Voto: </strong>
                                 <i v-for="vote in Math.round(movie.vote_average / 2)" class="fas fa-star"></i>
                                 <i v-for="vote in 5 - Math.round(movie.vote_average / 2)" class="far fa-star"></i>
                             </li>
