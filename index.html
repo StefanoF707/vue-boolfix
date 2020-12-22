@@ -53,37 +53,37 @@
                     <div class="no-results">
                         <h2>Mannaggia! Non ce l'abbiamo.</h2>
                         <p>Prova a cercare altri film o serie tv.</p>
-                    </div>        
+                    </div>
                 </template>
                 <template v-else>
-                    <a href="#" v-for="movie in movies" class="movie">
-                        <img :src="(movie.poster_path != undefined) ? poster + movie.poster_path : noImgFound" :alt="'locandina ' + movie.original_title" class="img100">
+                    <a href="#" v-for="result in results" class="card">
+                        <img :src="(result.poster_path != undefined) ? poster + result.poster_path : noImgFound" :alt="'locandina ' + result.original_title" class="img100">
                         <div class="layover">
                             <ul>
                                 <li>
                                     <strong>Titolo:</strong>
-                                    {{ movie.title || movie.name }}
+                                    {{ result.title || result.name }}
                                 </li>
-                                <li v-if="movie.original_title != movie.title || movie.original_name != movie.name">
+                                <li v-if="result.original_title != result.title || result.original_name != result.name">
                                     <strong>Titolo originale:</strong>
-                                    {{ movie.original_title || movie.original_name }}
+                                    {{ result.original_title || result.original_name }}
                                 </li>
                                 <li class="language">
                                     <strong>Lingua:</strong>
-                                    <img v-if="movie.original_language == 'de' ||
-                                    movie.original_language == 'en' ||
-                                    movie.original_language == 'fr' ||
-                                    movie.original_language == 'it'" :src="'img/icons/' + movie.original_language + '.png'" alt="icon flag">
-                                    <span v-else>{{ movie.original_language }}</span>
+                                    <img v-if="result.original_language == 'de' ||
+                                    result.original_language == 'en' ||
+                                    result.original_language == 'fr' ||
+                                    result.original_language == 'it'" :src="'img/icons/' + result.original_language + '.png'" alt="icon flag">
+                                    <span v-else>{{ result.original_language }}</span>
                                 </li>
-                                <li v-if="movie.vote_average != 0" class="rating">
+                                <li v-if="result.vote_average != 0" class="rating">
                                     <strong>Voto: </strong>
-                                    <i v-for="vote in Math.round(movie.vote_average / 2)" class="fas fa-star"></i>
-                                    <i v-for="vote in 5 - Math.round(movie.vote_average / 2)" class="far fa-star"></i>
+                                    <i v-for="vote in Math.round(result.vote_average / 2)" class="fas fa-star"></i>
+                                    <i v-for="vote in 5 - Math.round(result.vote_average / 2)" class="far fa-star"></i>
                                 </li>
-                                <li v-if="movie.overview != ''" class="overview">
+                                <li v-if="result.overview != ''" class="overview">
                                     <strong>Trama:</strong>
-                                    {{ movie.overview }}
+                                    {{ result.overview }}
                                 </li>
                             </ul>
                         </div>

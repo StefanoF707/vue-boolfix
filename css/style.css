@@ -181,14 +181,14 @@ main {
     color: #757575;
 }
 
-.movie {
+.card {
     width: calc(100% / 3 - 40px);
     position: relative;
     margin: 10px 20px;
     font-size: 0;
     border: 2px solid #fff;
 }
-.movie::before {
+.card::before {
     content: "";
     display: inline-block;
     width: 20px;
@@ -201,7 +201,7 @@ main {
     right: 10px;
 }
 
-.movie > .layover {
+.card > .layover {
     position: absolute;
     top: 0;
     left: 0;
@@ -214,7 +214,7 @@ main {
     opacity: 0;
     transition: opacity 0.3s;
 }
-.movie:hover > .layover {
+.card:hover > .layover {
     opacity: 1;
 }
 

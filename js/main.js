@@ -14,7 +14,7 @@ let app = new Vue (
             pages: 1,
             noImgFound: "img/img-not-available.png",
             showTypes : ["Tutti", "Serie TV", "Film"],
-            movies: [],
+            results: [],
             query: "",
             searchQuery: "",
             openSearchField: false,
@@ -34,13 +34,13 @@ let app = new Vue (
                     }
                 })
                 .then( (response) => {
-                    this.movies = response.data.results;
-                    if (this.movies.length != 0) {
+                    this.results = response.data.results;
+                    if (this.results.length != 0) {
                         this.noResultsFound = false;
                     } else {
                         this.noResultsFound = true;
                     }
-                    console.log(this.movies);
+                    console.log(this.results);
                 } );
 
                 this.searchQuery = "";
