@@ -4,22 +4,24 @@ let app = new Vue (
         data: {
             // UTILITIES
             my_api_key: "abe738a72b875634baa4e3568faa8280",
-            genresUrl: "https://api.themoviedb.org/3/genre/movie/list?",
+            movieGenresUrl: "https://api.themoviedb.org/3/genre/movie/list?",
             moviesUrl: "https://api.themoviedb.org/3/search/movie?",
             tvSeriesUrl: "https://api.themoviedb.org/3/search/tv?",
             multiSearchUrl: "https://api.themoviedb.org/3/search/multi?",
             filterSearch: "https://api.themoviedb.org/3/search/multi?",
             poster: "https://image.tmdb.org/t/p/w780",
-            // UTILITIES
+            // /UTILITIES
             pages: 1,
             noImgFound: "img/img-not-available.png",
             showTypes : ["Tutti", "Serie TV", "Film"],
             results: [],
+            genresArray: [],
             query: "",
             searchQuery: "",
             openSearchField: false,
             noResultsFound: true,
             indexActive: 0,
+            genreSelected: -1,
         },
         methods: {
             getQueryByInput: function () {
@@ -35,12 +37,13 @@ let app = new Vue (
                 })
                 .then( (response) => {
                     this.results = response.data.results;
+
                     if (this.results.length != 0) {
                         this.noResultsFound = false;
                     } else {
                         this.noResultsFound = true;
                     }
-                    console.log(this.results);
+                    // console.log(this.results);
                 } );
 
                 this.searchQuery = "";
@@ -56,6 +59,19 @@ let app = new Vue (
                 }
                 this.query = "";
             },
+        },
+        mounted: function () {
+            axios.get(this.movieGenresUrl, {
+                params: {
+                    api_key: this.my_api_key,
+                    language: "it-IT",
+                }
+            })
+            .then( (response) => {
+                this.genresArray = response.data.genres;
+                console.log(this.genresArray);
+            } );
+
         },
     }
 );

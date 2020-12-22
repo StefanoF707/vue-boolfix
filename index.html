@@ -26,7 +26,12 @@
                             <li v-for="(type, index) in showTypes" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">{{ type }}</li>
                             <li>Nuovi e popolari</li>
                             <li>La mia lista</li>
+                            <li>{{ genreSelected }}</li>
                         </ul>
+                        <select v-model="genreSelected">
+                            <option value="-1">Tutti i generi</option>
+                            <option v-for="genre in genresArray" :value="genre.id">{{ genre.name }}</option>
+                        </select>
                     </nav>
                     <nav class="header-right-buttons">
                         <ul class="list-inline">
