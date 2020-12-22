@@ -2,8 +2,15 @@ let app = new Vue (
     {
         el: "#app",
         data: {
+            // UTILITIES
             my_api_key: "abe738a72b875634baa4e3568faa8280",
+            genresUrl: "https://api.themoviedb.org/3/genre/movie/list?",
+            moviesUrl: "https://api.themoviedb.org/3/search/movie?",
+            tvSeriesUrl: "https://api.themoviedb.org/3/search/tv?",
+            multiSearchUrl: "https://api.themoviedb.org/3/search/multi?",
+            filterSearch: "https://api.themoviedb.org/3/search/multi?",
             poster: "https://image.tmdb.org/t/p/w780",
+            // UTILITIES
             pages: 1,
             noImgFound: "img/img-not-available.png",
             showTypes : ["Tutti", "Serie TV", "Film"],
@@ -11,10 +18,7 @@ let app = new Vue (
             query: "",
             searchQuery: "",
             openSearchField: false,
-            moviesApi: "https://api.themoviedb.org/3/search/movie?",
-            tvSeriesApi: "https://api.themoviedb.org/3/search/tv?",
-            multiSearchApi: "https://api.themoviedb.org/3/search/multi?",
-            filterSearch: "https://api.themoviedb.org/3/search/multi?",
+            noResultsFound: true,
             indexActive: 0,
         },
         methods: {
@@ -31,22 +35,11 @@ let app = new Vue (
                 })
                 .then( (response) => {
                     this.movies = response.data.results;
-                    this.movies.forEach( (element) => {
-                        switch (element.original_language) {
-                            case "en":
-                                element.original_language = "img/icons/usa.png";
-                                break;
-                            case "it":
-                                element.original_language = "img/icons/italy.png";
-                                break;
-                            case "de":
-                                element.original_language = "img/icons/germany.png";
-                                break;
-                            case "fr":
-                                element.original_language = "img/icons/france.png";
-                                break;
-                        }
-                    } );
+                    if (this.movies.length != 0) {
+                        this.noResultsFound = false;
+                    } else {
+                        this.noResultsFound = true;
+                    }
                     console.log(this.movies);
                 } );
 
@@ -55,12 +48,13 @@ let app = new Vue (
             moveActiveClass: function (i) {
                 this.indexActive = i;
                 if (this.indexActive == 1) {
-                    this.filterSearch = this.tvSeriesApi;
+                    this.filterSearch = this.tvSeriesUrl;
                 } else if (this.indexActive == 2) {
-                    this.filterSearch = this.moviesApi;
+                    this.filterSearch = this.moviesUrl;
                 } else {
-                    this.filterSearch = this.multiSearchApi;
+                    this.filterSearch = this.multiSearchUrl;
                 }
+                this.query = "";
             },
         },
     }

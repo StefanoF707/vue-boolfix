@@ -48,36 +48,47 @@
                 </div>
             </header>
 
-            <main v-if="movies.length != 0">
-                <a href="#" v-for="movie in movies" class="movie">
-                    <img :src="(movie.poster_path != undefined) ? poster + movie.poster_path : noImgFound" :alt="'locandina ' + movie.original_title" class="img100">
-                    <div class="layover">
-                        <ul>
-                            <li>
-                                <strong>Titolo:</strong>
-                                {{ movie.title || movie.name }}
-                            </li>
-                            <li v-if="movie.original_title != movie.title || movie.original_name != movie.name">
-                                <strong>Titolo originale:</strong>
-                                {{ movie.original_title || movie.original_name }}
-                            </li>
-                            <li class="language">
-                                <strong>Lingua:</strong>
-                                <img v-if="movie.original_language.includes('img/')" :src="movie.original_language" alt="icon flag">
-                                <span v-else>{{ movie.original_language }}</span>
-                            </li>
-                            <li v-if="movie.vote_average != 0" class="rating">
-                                <strong>Voto: </strong>
-                                <i v-for="vote in Math.round(movie.vote_average / 2)" class="fas fa-star"></i>
-                                <i v-for="vote in 5 - Math.round(movie.vote_average / 2)" class="far fa-star"></i>
-                            </li>
-                            <li v-if="movie.overview != ''" class="overview">
-                                <strong>Trama:</strong>
-                                {{ movie.overview }}
-                            </li>
-                        </ul>
-                    </div>
-                </a>
+            <main v-if="query != ''">
+                <template v-if="noResultsFound == true">
+                    <div class="no-results">
+                        <h2>Mannaggia! Non ce l'abbiamo.</h2>
+                        <p>Prova a cercare altri film o serie tv.</p>
+                    </div>        
+                </template>
+                <template v-else>
+                    <a href="#" v-for="movie in movies" class="movie">
+                        <img :src="(movie.poster_path != undefined) ? poster + movie.poster_path : noImgFound" :alt="'locandina ' + movie.original_title" class="img100">
+                        <div class="layover">
+                            <ul>
+                                <li>
+                                    <strong>Titolo:</strong>
+                                    {{ movie.title || movie.name }}
+                                </li>
+                                <li v-if="movie.original_title != movie.title || movie.original_name != movie.name">
+                                    <strong>Titolo originale:</strong>
+                                    {{ movie.original_title || movie.original_name }}
+                                </li>
+                                <li class="language">
+                                    <strong>Lingua:</strong>
+                                    <img v-if="movie.original_language == 'de' ||
+                                    movie.original_language == 'en' ||
+                                    movie.original_language == 'fr' ||
+                                    movie.original_language == 'it'" :src="'img/icons/' + movie.original_language + '.png'" alt="icon flag">
+                                    <span v-else>{{ movie.original_language }}</span>
+                                </li>
+                                <li v-if="movie.vote_average != 0" class="rating">
+                                    <strong>Voto: </strong>
+                                    <i v-for="vote in Math.round(movie.vote_average / 2)" class="fas fa-star"></i>
+                                    <i v-for="vote in 5 - Math.round(movie.vote_average / 2)" class="far fa-star"></i>
+                                </li>
+                                <li v-if="movie.overview != ''" class="overview">
+                                    <strong>Trama:</strong>
+                                    {{ movie.overview }}
+                                </li>
+                            </ul>
+                        </div>
+                    </a>
+                </template>
             </main>
             <main v-else>
                 <img v-if="indexActive == 1" src="img/bcs-jumbotron.jpg" alt="jumbotron" class="img100">
