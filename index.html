@@ -15,24 +15,35 @@
         <div id="app" class="wrapper">
 
             <header>
+                <!-- logo -->
                 <div class="header-left">
                     <a href="#">
                         <img src="img/netflix-logo-completo.png" alt="logo netflix">
                     </a>
                 </div>
+                <!-- /logo -->
+
+                <!-- navbars -->
                 <div class="header-right">
+
+                    <!-- navbar contenente la lista delle sezioni del sito -->
                     <nav class="header-right-nav">
                         <ul class="list-inline">
                             <li v-for="(type, index) in showTypes" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">{{ type }}</li>
                             <li>Nuovi e popolari</li>
                             <li>La mia lista</li>
+                            <!-- debug -->
                             <li>{{ genreSelected }}</li>
+                            <!-- /debug -->
                         </ul>
                         <select v-model="genreSelected">
                             <option value="-1">Tutti i generi</option>
                             <option v-for="genre in genresArray" :value="genre.id">{{ genre.name }}</option>
                         </select>
                     </nav>
+                    <!-- /navbar contenente la lista delle sezioni del sito -->
+
+                    <!-- navbar contenente l'input di ricerca ed i bottoni relativi all'account collegato -->
                     <nav class="header-right-buttons">
                         <ul class="list-inline">
                             <li>
@@ -50,56 +61,84 @@
                             <li class="avatar"><img src="img/avatar.png" alt="foto profilo account" class="img100"></li>
                         </ul>
                     </nav>
+                    <!-- /navbar contenente l'input di ricerca ed i bottoni relativi all'account collegato -->
+
                 </div>
+                <!-- /navbars -->
+
             </header>
 
             <main v-if="query != ''">
+                <!-- template da mostrare nel caso in cui la ricerca non produca risultati -->
                 <template v-if="noResultsFound == true">
                     <div class="no-results">
                         <h2>Mannaggia! Non ce l'abbiamo.</h2>
                         <p>Prova a cercare altri film o serie tv.</p>
                     </div>
                 </template>
+                <!--/ template da mostrare nel caso in cui la ricerca non produca risultati -->
+
                 <template v-else>
                     <a href="#" v-for="result in results" class="card">
                         <img :src="(result.poster_path != undefined) ? poster + result.poster_path : noImgFound" :alt="'locandina ' + result.original_title" class="img100">
                         <div class="layover">
                             <ul>
+                                <!-- titolo -->
                                 <li>
                                     <strong>Titolo:</strong>
                                     {{ result.title || result.name }}
                                 </li>
+                                <!-- titolo -->
+
+                                <!-- titolo originale -->
                                 <li v-if="result.original_title != result.title || result.original_name != result.name">
                                     <strong>Titolo originale:</strong>
                                     {{ result.original_title || result.original_name }}
                                 </li>
+                                <!-- /titolo originale -->
+
+                                <!-- lingua -->
                                 <li class="language">
                                     <strong>Lingua:</strong>
                                     <img v-if="result.original_language == 'de' ||
                                     result.original_language == 'en' ||
                                     result.original_language == 'fr' ||
                                     result.original_language == 'it'" :src="'img/icons/' + result.original_language + '.png'" alt="icon flag">
-                                    <span v-else>{{ result.original_language }}</span>
+                                    <span v-else>
+                                        {{ result.original_language }}
+                                    </span>
                                 </li>
+                                <!-- /lingua -->
+
+                                <!-- voto -->
                                 <li v-if="result.vote_average != 0" class="rating">
                                     <strong>Voto: </strong>
                                     <i v-for="vote in Math.round(result.vote_average / 2)" class="fas fa-star"></i>
                                     <i v-for="vote in 5 - Math.round(result.vote_average / 2)" class="far fa-star"></i>
                                 </li>
+                                <!-- /voto -->
+
+                                <!-- trama -->
                                 <li v-if="result.overview != ''" class="overview">
                                     <strong>Trama:</strong>
                                     {{ result.overview }}
                                 </li>
+                                <!-- /trama -->
+
                             </ul>
                         </div>
                     </a>
                 </template>
             </main>
+
+            <!-- jumbotrons da mostrare in base alla sezione della pagina selezionata -->
             <main v-else>
                 <img v-if="indexActive == 1" src="img/bcs-jumbotron.jpg" alt="jumbotron" class="img100">
                 <img v-else-if="indexActive == 2" src="img/interstellar-jumbotron.jpg" alt="jumbotron" class="img100">
                 <img v-else src="img/netflix-jumbotron.jpg" alt="jumbotron" class="img100">
             </main>
+            <!-- /jumbotrons da mostrare in base alla sezione della pagina selezionata -->
+
 
         </div>
 
