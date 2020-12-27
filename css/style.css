@@ -235,6 +235,13 @@ main {
     font-size: 17px;
 }
 
+.layover li.genres > span::after {
+    content: ", ";
+}
+.layover li.genres > span:last-child::after {
+    content: ".";
+}
+
 .layover li.overview {
     max-height: 40%;
     position: absolute;

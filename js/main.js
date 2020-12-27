@@ -10,9 +10,9 @@ let app = new Vue (
             multiSearchUrl: "https://api.themoviedb.org/3/search/multi?",
             filterSearch: "https://api.themoviedb.org/3/search/multi?",
             poster: "https://image.tmdb.org/t/p/w780",
-            // /UTILITIES
-            pages: 1,
             noImgFound: "img/img-not-available.png",
+            pages: 1,
+            // /UTILITIES
             showTypes : ["Tutti", "Serie TV", "Film"],
             results: [],
             genresArray: [],
@@ -24,6 +24,7 @@ let app = new Vue (
             genreSelected: -1,
         },
         methods: {
+
             getQueryByInput: function () {
                 this.query = this.searchQuery;
 
@@ -38,16 +39,24 @@ let app = new Vue (
                 .then( (response) => {
                     this.results = response.data.results;
 
+                    this.genresArray.forEach( (element) => {
+                        this.results.forEach( (el) => {
+                            if (el.genre_ids.includes(element.id)) {
+                                el.genre_ids.push(element.name);
+                            }
+                        } );
+                    } );
+
                     if (this.results.length != 0) {
                         this.noResultsFound = false;
                     } else {
                         this.noResultsFound = true;
                     }
-                    // console.log(this.results);
                 } );
 
                 this.searchQuery = "";
             },
+
             moveActiveClass: function (i) {
                 this.indexActive = i;
                 if (this.indexActive == 1) {
@@ -59,19 +68,23 @@ let app = new Vue (
                 }
                 this.query = "";
             },
+
+            getGenresByAxiosCall: function () {
+                axios.get(this.movieGenresUrl, {
+                    params: {
+                        api_key: this.my_api_key,
+                        language: "it-IT",
+                    }
+                })
+                .then( (response) => {
+                    this.genresArray = response.data.genres;
+                    console.log(this.genresArray);
+                } );
+            },
+
         },
         mounted: function () {
-            axios.get(this.movieGenresUrl, {
-                params: {
-                    api_key: this.my_api_key,
-                    language: "it-IT",
-                }
-            })
-            .then( (response) => {
-                this.genresArray = response.data.genres;
-                console.log(this.genresArray);
-            } );
-
+            this.getGenresByAxiosCall();
         },
     }
 );

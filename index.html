@@ -29,17 +29,21 @@
                     <!-- navbar contenente la lista delle sezioni del sito -->
                     <nav class="header-right-nav">
                         <ul class="list-inline">
-                            <li v-for="(type, index) in showTypes" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">{{ type }}</li>
+                            <li v-for="(type, index) in showTypes" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">
+                                {{ type }}
+                            </li>
                             <li>Nuovi e popolari</li>
                             <li>La mia lista</li>
                             <!-- debug -->
                             <li>{{ genreSelected }}</li>
                             <!-- /debug -->
                         </ul>
+                        <!-- da spostare e modificare -->
                         <select v-model="genreSelected">
                             <option value="-1">Tutti i generi</option>
                             <option v-for="genre in genresArray" :value="genre.id">{{ genre.name }}</option>
                         </select>
+                        <!-- /da spostare e modificare -->
                     </nav>
                     <!-- /navbar contenente la lista delle sezioni del sito -->
 
@@ -62,23 +66,15 @@
                         </ul>
                     </nav>
                     <!-- /navbar contenente l'input di ricerca ed i bottoni relativi all'account collegato -->
-
                 </div>
                 <!-- /navbars -->
 
             </header>
 
             <main v-if="query != ''">
-                <!-- template da mostrare nel caso in cui la ricerca non produca risultati -->
-                <template v-if="noResultsFound == true">
-                    <div class="no-results">
-                        <h2>Mannaggia! Non ce l'abbiamo.</h2>
-                        <p>Prova a cercare altri film o serie tv.</p>
-                    </div>
-                </template>
-                <!--/ template da mostrare nel caso in cui la ricerca non produca risultati -->
 
-                <template v-else>
+
+                <template v-if="noResultsFound == false">
                     <a href="#" v-for="result in results" class="card">
                         <img :src="(result.poster_path != undefined) ? poster + result.poster_path : noImgFound" :alt="'locandina ' + result.original_title" class="img100">
                         <div class="layover">
@@ -118,6 +114,14 @@
                                 </li>
                                 <!-- /voto -->
 
+                                <!-- genere -->
+                                <li v-if="result.genre_ids.length > 0" class="genres">
+                                    <strong>Genere:</strong>
+                                    <span v-for="genre in result.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
+                                </li>
+                                <!-- /genere -->
+
+
                                 <!-- trama -->
                                 <li v-if="result.overview != ''" class="overview">
                                     <strong>Trama:</strong>
@@ -129,6 +133,15 @@
                         </div>
                     </a>
                 </template>
+
+                <!-- template da mostrare nel caso in cui la ricerca non produca risultati -->
+                <template v-else>
+                    <div class="no-results">
+                        <h2>Mannaggia! Non ce l'abbiamo.</h2>
+                        <p>Prova a cercare altri film o serie tv.</p>
+                    </div>
+                </template>
+                <!--/ template da mostrare nel caso in cui la ricerca non produca risultati -->
             </main>
 
             <!-- jumbotrons da mostrare in base alla sezione della pagina selezionata -->
