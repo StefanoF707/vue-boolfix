@@ -19,9 +19,8 @@ let app = new Vue (
             query: "",
             searchQuery: "",
             openSearchField: false,
-            noResultsFound: true,
             indexActive: 0,
-            genreSelected: -1,
+            genreSelected: "",
         },
         methods: {
 
@@ -39,19 +38,14 @@ let app = new Vue (
                 .then( (response) => {
                     this.results = response.data.results;
 
-                    this.genresArray.forEach( (element) => {
-                        this.results.forEach( (el) => {
-                            if (el.genre_ids.includes(element.id)) {
-                                el.genre_ids.push(element.name);
+                    this.results.forEach( (element) => {
+                        this.genresArray.forEach( (el) => {
+                            if (element.genre_ids.includes(el.id)) {
+                                element.genre_ids.push(el.name);
                             }
                         } );
                     } );
 
-                    if (this.results.length != 0) {
-                        this.noResultsFound = false;
-                    } else {
-                        this.noResultsFound = true;
-                    }
                 } );
 
                 this.searchQuery = "";
@@ -78,7 +72,6 @@ let app = new Vue (
                 })
                 .then( (response) => {
                     this.genresArray = response.data.genres;
-                    console.log(this.genresArray);
                 } );
             },
 
