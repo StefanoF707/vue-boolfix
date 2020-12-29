@@ -19,6 +19,7 @@ let app = new Vue (
             query: "",
             searchQuery: "",
             openSearchField: false,
+            axiosCall: false,
             indexActive: 0,
             genreSelected: "",
         },
@@ -38,6 +39,8 @@ let app = new Vue (
                 .then( (response) => {
                     this.results = response.data.results;
 
+                    this.axiosCall = true;
+
                     this.results.forEach( (element) => {
                         this.genresArray.forEach( (el) => {
                             if (element.genre_ids.includes(el.id)) {
@@ -53,6 +56,7 @@ let app = new Vue (
 
             moveActiveClass: function (i) {
                 this.indexActive = i;
+                this.axiosCall = false;
                 if (this.indexActive == 1) {
                     this.filterSearch = this.tvSeriesUrl;
                 } else if (this.indexActive == 2) {

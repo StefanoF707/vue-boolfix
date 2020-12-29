@@ -3,6 +3,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="utf-8">
+        <link rel="icon" href="img/icons/netflix-icon.png">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/b954c4656e.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/style.css">
@@ -63,7 +64,7 @@
 
             </header>
 
-            <main v-if="query != ''">
+            <main v-if="axiosCall">
 
                 <template v-if="results.length > 0">
                     <!-- da spostare e modificare -->
