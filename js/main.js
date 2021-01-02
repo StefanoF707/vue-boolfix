@@ -11,9 +11,10 @@ let app = new Vue (
             noImgFound: "img/img-not-available.png",
             pages: 1,
             // /UTILITIES
-            showTypes : ["Tutti", "Serie TV", "Film"],
+            showTypes : ["Tutti", "Serie TV", "Film", "Nuovi e popolari", "La mia lista"],
             results: [],
             genresArray: [],
+            userList: [],
             query: "",
             searchQuery: "",
             openSearchField: false,
@@ -49,10 +50,8 @@ let app = new Vue (
                             this.results = [...seriesResponse.data.results, ...moviesResponse.data.results];
                         } else if (this.indexActive == 1) {
                             this.results = seriesResponse.data.results;
-                            console.log(this.results);
                         } else if (this.indexActive == 2) {
                             this.results = moviesResponse.data.results;
-                            console.log(this.results);
                         }
 
                         this.results.sort(function(a, b) {
@@ -62,8 +61,6 @@ let app = new Vue (
                         while (this.results.length > 20) {
                             this.results.pop();
                         }
-                        console.log(this.results);
-
 
                         this.axiosCall = true;
 
@@ -97,6 +94,15 @@ let app = new Vue (
                     this.genresArray = response.data.genres;
                 } );
             },
+
+            addItemToUserList: function (item) {
+                this.userList.push(item);
+                console.log(this.userList);
+            },
+
+            removeItemToUserList: function (item) {
+
+            }
 
         },
         created: function () {

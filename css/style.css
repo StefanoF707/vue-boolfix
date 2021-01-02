@@ -160,6 +160,7 @@ main {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
+    align-items: flex-start;
     height: calc(100vh - 70px);
     margin-top: 70px;
     overflow: auto;
@@ -198,10 +199,13 @@ main .genre-selector > option {
 }
 .no-results > p {
     color: #757575;
+    max-width: 500px;
+    text-align: center;
 }
 
 .card {
     width: calc(100% / 4 - 40px);
+    height: 405px;
     position: relative;
     margin: 50px 20px 0;
     font-size: 0;
@@ -235,6 +239,13 @@ main .genre-selector > option {
 }
 .card:hover > .layover {
     opacity: 1;
+}
+
+.layover > .add-list {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    font-size: 40px;
 }
 
 .layover li {

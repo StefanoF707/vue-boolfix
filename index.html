@@ -33,9 +33,6 @@
                             <li v-for="(type, index) in showTypes" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">
                                 {{ type }}
                             </li>
-                            <li>Nuovi e popolari</li>
-                            <li>La mia lista</li>
-                            <li></li>
                         </ul>
                     </nav>
                     <!-- /navbar contenente la lista delle sezioni del sito -->
@@ -64,89 +61,167 @@
 
             </header>
 
-            <main v-if="axiosCall">
+            <template v-if="indexActive > -1 && indexActive < 3">
+                <main v-if="axiosCall">
 
-                <template v-if="results.length > 0">
-                    <!-- da spostare e modificare -->
-                    <select v-model="genreSelected" class="genre-selector">
-                        <option value="">Tutti i generi</option>
-                        <option v-for="genre in genresArray" :value="genre.name">{{ genre.name }}</option>
-                    </select>
-                    <!-- /da spostare e modificare -->
-                    <a href="#" v-for="result in results" class="card" v-if="result.genre_ids.includes(genreSelected) || genreSelected == ''">
-                        <img :src="(result.poster_path != undefined) ? poster + result.poster_path : noImgFound" :alt="'locandina ' + result.original_title" class="img100">
+                    <template v-if="results.length > 0">
+                        <!-- da spostare e modificare -->
+                        <select v-model="genreSelected" class="genre-selector">
+                            <option value="">Tutti i generi</option>
+                            <option v-for="genre in genresArray" :value="genre.name">{{ genre.name }}</option>
+                        </select>
+                        <!-- /da spostare e modificare -->
+                        <a href="#" v-for="result in results" class="card" v-if="result.genre_ids.includes(genreSelected) || genreSelected == ''">
+                            <img :src="(result.poster_path != undefined) ? poster + result.poster_path : noImgFound" :alt="'locandina ' + result.original_title" class="img100">
+                            <div class="layover">
+                                <span class="add-list" @click="addItemToUserList(result)">+</span>
+                                <ul>
+                                    <!-- titolo -->
+                                    <li>
+                                        <strong>Titolo:</strong>
+                                        {{ result.title || result.name }}
+                                    </li>
+                                    <!-- titolo -->
+
+                                    <!-- titolo originale -->
+                                    <li v-if="result.original_title != result.title || result.original_name != result.name">
+                                        <strong>Titolo originale:</strong>
+                                        {{ result.original_title || result.original_name }}
+                                    </li>
+                                    <!-- /titolo originale -->
+
+                                    <!-- lingua -->
+                                    <li class="language">
+                                        <strong>Lingua:</strong>
+                                        <img v-if="result.original_language == 'de' ||
+                                        result.original_language == 'en' ||
+                                        result.original_language == 'fr' ||
+                                        result.original_language == 'it'" :src="'img/icons/' + result.original_language + '.png'" alt="icon flag">
+                                        <span v-else>
+                                            {{ result.original_language }}
+                                        </span>
+                                    </li>
+                                    <!-- /lingua -->
+
+                                    <!-- voto -->
+                                    <li v-if="result.vote_average != 0" class="rating">
+                                        <strong>Voto: </strong>
+                                        <i v-for="vote in Math.round(result.vote_average / 2)" class="fas fa-star"></i>
+                                        <i v-for="vote in 5 - Math.round(result.vote_average / 2)" class="far fa-star"></i>
+                                    </li>
+                                    <!-- /voto -->
+
+                                    <!-- genere -->
+                                    <li v-if="result.genre_ids.length > 0" class="genres">
+                                        <strong>Genere:</strong>
+                                        <span v-for="genre in result.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
+                                    </li>
+                                    <!-- /genere -->
+
+
+                                    <!-- trama -->
+                                    <li v-if="result.overview != ''" class="overview">
+                                        <strong>Trama:</strong>
+                                        {{ result.overview }}
+                                    </li>
+                                    <!-- /trama -->
+
+                                </ul>
+                            </div>
+                        </a>
+                    </template>
+
+                    <!-- template da mostrare nel caso in cui la ricerca non produca risultati -->
+                    <template v-else>
+                        <div class="no-results">
+                            <h2>Mannaggia! Non ce l'abbiamo.</h2>
+                            <p>Prova a cercare altri film o serie tv.</p>
+                        </div>
+                    </template>
+                    <!--/ template da mostrare nel caso in cui la ricerca non produca risultati -->
+                </main>
+
+                <!-- jumbotrons da mostrare in base alla sezione della pagina selezionata -->
+                <main v-else>
+                    <img v-if="indexActive == 0 || indexActive == 1 || indexActive == 2" :src="'img/jumbotron' + indexActive + '.jpg'" alt="jumbotron" class="img100">
+                </main>
+                <!-- /jumbotrons da mostrare in base alla sezione della pagina selezionata -->
+            </template>
+
+            <template v-else-if="indexActive == 3">
+                <main>
+                    Nuovi e popolari
+                </main>
+            </template>
+
+            <template v-else>
+                <main v-if="userList.length < 1">
+                    <div class="no-results">
+                        <h2>La tua lista è vuota</h2>
+                        <p>Per aggiungere un elemento all tua lista, seleziona il film o la serie TV e premi sul segno "+"</p>
+                    </div>
+                </main>
+
+                <main v-else>
+                    <a href="#" v-for="item in userList" class="card">
+                        <img :src="(item.poster_path != undefined) ? poster + item.poster_path : noImgFound" :alt="'locandina ' + item.original_title" class="img100">
                         <div class="layover">
                             <ul>
                                 <!-- titolo -->
                                 <li>
                                     <strong>Titolo:</strong>
-                                    {{ result.title || result.name }}
+                                    {{ item.title || item.name }}
                                 </li>
                                 <!-- titolo -->
 
                                 <!-- titolo originale -->
-                                <li v-if="result.original_title != result.title || result.original_name != result.name">
+                                <li v-if="item.original_title != item.title || item.original_name != item.name">
                                     <strong>Titolo originale:</strong>
-                                    {{ result.original_title || result.original_name }}
+                                    {{ item.original_title || item.original_name }}
                                 </li>
                                 <!-- /titolo originale -->
 
                                 <!-- lingua -->
                                 <li class="language">
                                     <strong>Lingua:</strong>
-                                    <img v-if="result.original_language == 'de' ||
-                                    result.original_language == 'en' ||
-                                    result.original_language == 'fr' ||
-                                    result.original_language == 'it'" :src="'img/icons/' + result.original_language + '.png'" alt="icon flag">
+                                    <img v-if="item.original_language == 'de' ||
+                                    item.original_language == 'en' ||
+                                    item.original_language == 'fr' ||
+                                    item.original_language == 'it'" :src="'img/icons/' + item.original_language + '.png'" alt="icon flag">
                                     <span v-else>
-                                        {{ result.original_language }}
+                                        {{ item.original_language }}
                                     </span>
                                 </li>
                                 <!-- /lingua -->
 
                                 <!-- voto -->
-                                <li v-if="result.vote_average != 0" class="rating">
+                                <li v-if="item.vote_average != 0" class="rating">
                                     <strong>Voto: </strong>
-                                    <i v-for="vote in Math.round(result.vote_average / 2)" class="fas fa-star"></i>
-                                    <i v-for="vote in 5 - Math.round(result.vote_average / 2)" class="far fa-star"></i>
+                                    <i v-for="vote in Math.round(item.vote_average / 2)" class="fas fa-star"></i>
+                                    <i v-for="vote in 5 - Math.round(item.vote_average / 2)" class="far fa-star"></i>
                                 </li>
                                 <!-- /voto -->
 
                                 <!-- genere -->
-                                <li v-if="result.genre_ids.length > 0" class="genres">
+                                <li v-if="item.genre_ids.length > 0" class="genres">
                                     <strong>Genere:</strong>
-                                    <span v-for="genre in result.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
+                                    <span v-for="genre in item.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
                                 </li>
                                 <!-- /genere -->
 
 
                                 <!-- trama -->
-                                <li v-if="result.overview != ''" class="overview">
+                                <li v-if="item.overview != ''" class="overview">
                                     <strong>Trama:</strong>
-                                    {{ result.overview }}
+                                    {{ item.overview }}
                                 </li>
                                 <!-- /trama -->
 
                             </ul>
                         </div>
                     </a>
-                </template>
-
-                <!-- template da mostrare nel caso in cui la ricerca non produca risultati -->
-                <template v-else>
-                    <div class="no-results">
-                        <h2>Mannaggia! Non ce l'abbiamo.</h2>
-                        <p>Prova a cercare altri film o serie tv.</p>
-                    </div>
-                </template>
-                <!--/ template da mostrare nel caso in cui la ricerca non produca risultati -->
-            </main>
-
-            <!-- jumbotrons da mostrare in base alla sezione della pagina selezionata -->
-            <main v-else>
-                <img v-if="indexActive == 0 || indexActive == 1 || indexActive == 2" :src="'img/jumbotron' + indexActive + '.jpg'" alt="jumbotron" class="img100">
-            </main>
-            <!-- /jumbotrons da mostrare in base alla sezione della pagina selezionata -->
+                </main>
+            </template>
 
 
         </div>
