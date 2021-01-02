@@ -96,12 +96,21 @@ let app = new Vue (
             },
 
             addItemToUserList: function (item) {
-                this.userList.push(item);
+                if (this.userList.length == 0) {
+                    this.userList.push(item);
+                } else {
+
+                }
+                this.userList.forEach( (element) => {
+                    if (!this.userList.includes(item)) {
+                        this.userList.push(item);
+                    }
+                } );
                 console.log(this.userList);
             },
 
-            removeItemToUserList: function (item) {
-
+            removeItemToUserList: function (index) {
+                this.userList.splice(index, 1);
             }
 
         },

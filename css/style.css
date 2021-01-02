@@ -26,7 +26,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: middle;
 }
 
 ul {
@@ -232,7 +232,7 @@ main .genre-selector > option {
     height: 100%;
     background: #000000ee;
     padding: 30px 10px 10px;
-    font-size: 17px;
+    font-size: 15px;
     word-wrap: break-word;
     opacity: 0;
     transition: opacity 0.3s;
@@ -241,11 +241,15 @@ main .genre-selector > option {
     opacity: 1;
 }
 
-.layover > .add-list {
+.layover > .manage-userlist {
     position: absolute;
-    top: -5px;
+    top: 5px;
     right: 5px;
-    font-size: 40px;
+    font-size: 20px;
+    transition: 0.3s;
+}
+.layover > .manage-userlist:hover {
+    color: #e50914;
 }
 
 .layover li {

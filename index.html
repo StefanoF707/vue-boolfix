@@ -74,7 +74,9 @@
                         <a href="#" v-for="result in results" class="card" v-if="result.genre_ids.includes(genreSelected) || genreSelected == ''">
                             <img :src="(result.poster_path != undefined) ? poster + result.poster_path : noImgFound" :alt="'locandina ' + result.original_title" class="img100">
                             <div class="layover">
-                                <span class="add-list" @click="addItemToUserList(result)">+</span>
+                                <span class="manage-userlist" @click="addItemToUserList(result)">
+                                    <i class="fas fa-plus-square"></i>
+                                </span>
                                 <ul>
                                     <!-- titolo -->
                                     <li>
@@ -158,14 +160,18 @@
                 <main v-if="userList.length < 1">
                     <div class="no-results">
                         <h2>La tua lista è vuota</h2>
-                        <p>Per aggiungere un elemento all tua lista, seleziona il film o la serie TV e premi sul segno "+"</p>
+
+                        <p>Per aggiungere un elemento all tua lista, seleziona il film o la serie TV e premi sul segno <i class="fas fa-plus-square"></i></p>
                     </div>
                 </main>
 
                 <main v-else>
-                    <a href="#" v-for="item in userList" class="card">
+                    <a href="#" v-for="(item, index) in userList" class="card">
                         <img :src="(item.poster_path != undefined) ? poster + item.poster_path : noImgFound" :alt="'locandina ' + item.original_title" class="img100">
                         <div class="layover">
+                            <span class="manage-userlist" @click="removeItemToUserList(index)">
+                                <i class="fas fa-minus-square"></i>
+                            </span>
                             <ul>
                                 <!-- titolo -->
                                 <li>
