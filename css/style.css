@@ -201,7 +201,7 @@ main .genre-selector > option {
 }
 
 .card {
-    width: calc(100% / 3 - 40px);
+    width: calc(100% / 4 - 40px);
     position: relative;
     margin: 50px 20px 0;
     font-size: 0;

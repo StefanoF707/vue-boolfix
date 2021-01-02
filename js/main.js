@@ -7,8 +7,6 @@ let app = new Vue (
             movieGenresUrl: "https://api.themoviedb.org/3/genre/movie/list?",
             moviesUrl: "https://api.themoviedb.org/3/search/movie?",
             tvSeriesUrl: "https://api.themoviedb.org/3/search/tv?",
-            multiSearchUrl: "https://api.themoviedb.org/3/search/multi?",
-            filterSearch: "https://api.themoviedb.org/3/search/multi?",
             poster: "https://image.tmdb.org/t/p/w780",
             noImgFound: "img/img-not-available.png",
             pages: 1,
@@ -28,7 +26,7 @@ let app = new Vue (
             getQueryByInput: function () {
                 this.query = this.searchQuery;
 
-                axios.get(this.filterSearch, {
+                axios.get(this.moviesUrl, {
                     params: {
                         api_key: this.my_api_key,
                         query: this.query,
@@ -36,19 +34,47 @@ let app = new Vue (
                         language: "it-IT",
                     }
                 })
-                .then( (response) => {
-                    this.results = response.data.results;
+                .then( (moviesResponse) => {
 
-                    this.axiosCall = true;
+                    axios.get(this.tvSeriesUrl, {
+                        params: {
+                            api_key: this.my_api_key,
+                            query: this.query,
+                            page: this.pages,
+                            language: "it-IT",
+                        }
+                    }).then( (seriesResponse) => {
 
-                    this.results.forEach( (element) => {
-                        this.genresArray.forEach( (el) => {
-                            if (element.genre_ids.includes(el.id)) {
-                                element.genre_ids.push(el.name);
-                            }
+                        if (this.indexActive == 0) {
+                            this.results = [...seriesResponse.data.results, ...moviesResponse.data.results];
+                        } else if (this.indexActive == 1) {
+                            this.results = seriesResponse.data.results;
+                            console.log(this.results);
+                        } else if (this.indexActive == 2) {
+                            this.results = moviesResponse.data.results;
+                            console.log(this.results);
+                        }
+
+                        this.results.sort(function(a, b) {
+                            return b.popularity - a.popularity;
+                        });
+
+                        while (this.results.length > 20) {
+                            this.results.pop();
+                        }
+                        console.log(this.results);
+
+
+                        this.axiosCall = true;
+
+                        this.results.forEach( (element) => {
+                            this.genresArray.forEach( (el) => {
+                                if (element.genre_ids.includes(el.id)) {
+                                    element.genre_ids.push(el.name);
+                                }
+                            } );
                         } );
                     } );
-
                 } );
 
                 this.searchQuery = "";
@@ -57,13 +83,6 @@ let app = new Vue (
             moveActiveClass: function (i) {
                 this.indexActive = i;
                 this.axiosCall = false;
-                if (this.indexActive == 1) {
-                    this.filterSearch = this.tvSeriesUrl;
-                } else if (this.indexActive == 2) {
-                    this.filterSearch = this.moviesUrl;
-                } else {
-                    this.filterSearch = this.multiSearchUrl;
-                }
                 this.query = "";
             },
 
@@ -80,7 +99,7 @@ let app = new Vue (
             },
 
         },
-        mounted: function () {
+        created: function () {
             this.getGenresByAxiosCall();
         },
     }
