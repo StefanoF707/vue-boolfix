@@ -26,7 +26,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: middle;
+}
+.jumbo100 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
 }
 
 ul {
@@ -232,7 +237,7 @@ main .genre-selector > option {
     height: 100%;
     background: #000000ee;
     padding: 30px 10px 10px;
-    font-size: 15px;
+    font-size: 13px;
     word-wrap: break-word;
     opacity: 0;
     transition: opacity 0.3s;
@@ -257,7 +262,7 @@ main .genre-selector > option {
 }
 
 .layover li.language > img {
-    width: 25px;
+    width: 20px;
     vertical-align: middle;
 }
 
@@ -266,7 +271,7 @@ main .genre-selector > option {
 }
 .layover li.rating > strong,
 .layover li.rating > i {
-    font-size: 17px;
+    font-size: 13px;
 }
 
 .layover li.genres > span::after {
@@ -282,4 +287,27 @@ main .genre-selector > option {
     bottom: 10px;
     padding-bottom: 20px;
     overflow: auto;
+}
+
+#trend {
+    height: calc(100vh - 70px);
+    margin-top: 70px;
+    overflow: auto;
+    padding: 10px;
+}
+
+#trend > h3 {
+    text-align: center;
+    font-size: 26px;
+}
+#trend > h3.tv-title {
+    margin-top: 40px;
+}
+
+#trend > .trend-movies,
+#trend > .trend-tv {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: flex-start;
 }

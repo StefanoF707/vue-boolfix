@@ -22,7 +22,7 @@ let app = new Vue (
             searchQuery: "",
             openSearchField: false,
             axiosCall: false,
-            indexActive: 0,
+            indexActive: 3,
             genreSelected: "",
         },
         methods: {
@@ -64,6 +64,8 @@ let app = new Vue (
                         while (this.results.length > 20) {
                             this.results.pop();
                         }
+
+                        console.log(this.results);
 
                         this.axiosCall = true;
 
@@ -122,6 +124,7 @@ let app = new Vue (
                         language: "it-IT",
                     }
                 }).then( (trendResponse) => {
+                    console.log(trendResponse.data.results);
 
                     trendResponse.data.results.forEach( (element) => {
                         this.genresArray.forEach( (el) => {
