@@ -212,7 +212,7 @@ main .genre-selector > option {
     width: calc(100% / 4 - 40px);
     height: 405px;
     position: relative;
-    margin: 50px 20px 0;
+    margin: 45px 20px 20px;
     font-size: 0;
     border: 2px solid #fff;
 }
@@ -237,7 +237,7 @@ main .genre-selector > option {
     height: 100%;
     background: #000000ee;
     padding: 30px 10px 10px;
-    font-size: 13px;
+    font-size: 14px;
     word-wrap: break-word;
     opacity: 0;
     transition: opacity 0.3s;
@@ -271,7 +271,7 @@ main .genre-selector > option {
 }
 .layover li.rating > strong,
 .layover li.rating > i {
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .layover li.genres > span::after {
@@ -282,10 +282,10 @@ main .genre-selector > option {
 }
 
 .layover li.overview {
-    max-height: 40%;
+    max-height: 30%;
     position: absolute;
     bottom: 10px;
-    padding-bottom: 20px;
+    padding: 0 20px 20px 0;
     overflow: auto;
 }
 
@@ -310,4 +310,5 @@ main .genre-selector > option {
     justify-content: flex-start;
     flex-wrap: wrap;
     align-items: flex-start;
+    padding-bottom: 20px;
 }

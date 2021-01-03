@@ -1,392 +1,392 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="utf-8">
-        <link rel="icon" href="img/icons/netflix-icon.png">
-        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/b954c4656e.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="css/style.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-        <title>Vue Boolfix</title>
-    </head>
-    <body>
+<head>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta charset="utf-8">
+   <link rel="icon" href="img/icons/netflix-icon.png">
+   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+   <script src="https://kit.fontawesome.com/b954c4656e.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="css/style.css">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+   <title>Vue Boolfix</title>
+</head>
+<body>
 
-        <div id="app" class="wrapper">
+   <div id="app" class="wrapper">
 
-            <header>
-                <!-- logo -->
-                <div class="header-left">
-                    <a href="#">
-                        <img src="img/netflix-logo-completo.png" alt="logo netflix">
-                    </a>
-                </div>
-                <!-- /logo -->
+      <header>
+         <!-- logo -->
+         <div class="header-left">
+            <a href="#">
+               <img src="img/netflix-logo-completo.png" alt="logo netflix">
+            </a>
+         </div>
+         <!-- /logo -->
 
-                <!-- navbars -->
-                <div class="header-right">
+         <!-- navbars -->
+         <div class="header-right">
 
-                    <!-- navbar contenente la lista delle sezioni del sito -->
-                    <nav class="header-right-nav">
-                        <ul class="list-inline">
-                            <li v-for="(type, index) in showTypes" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">
-                                {{ type }}
-                            </li>
-                        </ul>
-                    </nav>
-                    <!-- /navbar contenente la lista delle sezioni del sito -->
+            <!-- navbar contenente la lista delle sezioni del sito -->
+            <nav class="header-right-nav">
+               <ul class="list-inline">
+                  <li v-for="(type, index) in sectionShower" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">
+                     {{ type }}
+                  </li>
+               </ul>
+            </nav>
+            <!-- /navbar contenente la lista delle sezioni del sito -->
 
-                    <!-- navbar contenente l'input di ricerca ed i bottoni relativi all'account collegato -->
-                    <nav class="header-right-buttons">
-                        <ul class="list-inline">
-                            <li>
-                                <div id="search-field" v-if="openSearchField">
-                                    <input v-model="searchQuery" type="text" placeholder="Titolo del film" @keyup.enter="getQueryByInput">
-                                    <button id="search-btn" @click="getQueryByInput">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button id="closer-btn" @click="openSearchField = false"><i class="fas fa-times"></i></button>
-                                </div>
-                                <i class="fas fa-search" v-else @click="openSearchField = true"></i>
-                            </li>
-                            <li><i class="fas fa-gift"></i></li>
-                            <li><i class="fas fa-bell"></i></li>
-                            <li class="avatar"><img src="img/avatar.png" alt="foto profilo account" class="img100"></li>
-                        </ul>
-                    </nav>
-                    <!-- /navbar contenente l'input di ricerca ed i bottoni relativi all'account collegato -->
-                </div>
-                <!-- /navbars -->
+            <!-- navbar contenente l'input di ricerca ed i bottoni relativi all'account collegato -->
+            <nav class="header-right-buttons">
+               <ul class="list-inline">
+                  <li>
+                     <div id="search-field" v-if="openSearchField">
+                        <input v-model="searchQuery" type="text" placeholder="Titolo del film" @keyup.enter="getQueryByInput">
+                        <button id="search-btn" @click="getQueryByInput">
+                           <i class="fas fa-search"></i>
+                        </button>
+                        <button id="closer-btn" @click="openSearchField = false"><i class="fas fa-times"></i></button>
+                     </div>
+                     <i class="fas fa-search" v-else @click="openSearchField = true"></i>
+                  </li>
+                  <li><i class="fas fa-gift"></i></li>
+                  <li><i class="fas fa-bell"></i></li>
+                  <li class="avatar"><img src="img/avatar.png" alt="foto profilo account" class="img100"></li>
+               </ul>
+            </nav>
+            <!-- /navbar contenente l'input di ricerca ed i bottoni relativi all'account collegato -->
+         </div>
+         <!-- /navbars -->
 
-            </header>
+      </header>
 
-            <template v-if="indexActive > -1 && indexActive < 3">
-                <main v-if="axiosCall">
+      <template v-if="indexActive > -1 && indexActive < 3">
+         <main v-if="axiosCall">
 
-                    <template v-if="results.length > 0">
+            <template v-if="results.length > 0">
 
-                        <!-- Selettore di generi -->
-                        <select v-model="genreSelected" class="genre-selector">
-                            <option value="">Tutti i generi</option>
-                            <option v-for="genre in genresArray" :value="genre.name">{{ genre.name }}</option>
-                        </select>
-                        <!-- /Selettore di generi -->
+               <!-- Selettore di generi -->
+               <select v-model="genreSelected" class="genre-selector">
+                  <option value="">Tutti i generi</option>
+                  <option v-for="genre in genresArray" :value="genre.name">{{ genre.name }}</option>
+               </select>
+               <!-- /Selettore di generi -->
 
-                        <!-- CARDS DELLE RICERCHE -->
-                        <a href="#" v-for="result in results" class="card" v-if="result.genre_ids.includes(genreSelected) || genreSelected == ''">
-                            <img :src="(result.poster_path != undefined) ? poster + result.poster_path : noImgFound" :alt="'locandina ' + result.original_title" class="img100">
-                            <div class="layover">
+               <!-- CARDS DELLE RICERCHE -->
+               <a href="#" v-for="result in results" class="card" v-if="result.genre_ids.includes(genreSelected) || genreSelected == ''">
+                  <img :src="(result.poster_path != undefined) ? poster + result.poster_path : noImgFound" :alt="'locandina ' + result.original_title" class="img100">
+                  <div class="layover">
 
-                                <!-- addList btn -->
-                                <span class="manage-userlist" @click="addItemToUserList(result)">
-                                    <i class="fas fa-plus-square"></i>
-                                </span>
-                                <!-- /addList btn -->
+                     <!-- addList btn -->
+                     <span class="manage-userlist" @click="addItemToUserList(result)">
+                        <i class="fas fa-plus-square"></i>
+                     </span>
+                     <!-- /addList btn -->
 
-                                <ul>
-                                    <!-- titolo -->
-                                    <li>
-                                        <strong>Titolo:</strong>
-                                        {{ result.title || result.name }}
-                                    </li>
-                                    <!-- titolo -->
+                     <ul>
+                        <!-- titolo -->
+                        <li>
+                           <strong>Titolo:</strong>
+                           {{ result.title || result.name }}
+                        </li>
+                        <!-- titolo -->
 
-                                    <!-- titolo originale -->
-                                    <li v-if="result.original_title != result.title || result.original_name != result.name">
-                                        <strong>Titolo originale:</strong>
-                                        {{ result.original_title || result.original_name }}
-                                    </li>
-                                    <!-- /titolo originale -->
+                        <!-- titolo originale -->
+                        <li v-if="result.original_title != result.title || result.original_name != result.name">
+                           <strong>Titolo originale:</strong>
+                           {{ result.original_title || result.original_name }}
+                        </li>
+                        <!-- /titolo originale -->
 
-                                    <!-- lingua -->
-                                    <li class="language">
-                                        <strong>Lingua:</strong>
-                                        <img v-if="result.original_language == 'de' ||
-                                        result.original_language == 'en' ||
-                                        result.original_language == 'fr' ||
-                                        result.original_language == 'it'" :src="'img/icons/' + result.original_language + '.png'" alt="icon flag">
-                                        <span v-else>
-                                            {{ result.original_language }}
-                                        </span>
-                                    </li>
-                                    <!-- /lingua -->
+                        <!-- lingua -->
+                        <li class="language">
+                           <strong>Lingua:</strong>
+                           <img v-if="result.original_language == 'de' ||
+                           result.original_language == 'en' ||
+                           result.original_language == 'fr' ||
+                           result.original_language == 'it'" :src="'img/icons/' + result.original_language + '.png'" alt="icon flag">
+                           <span v-else>
+                              {{ result.original_language }}
+                           </span>
+                        </li>
+                        <!-- /lingua -->
 
-                                    <!-- voto -->
-                                    <li v-if="result.vote_average != 0" class="rating">
-                                        <strong>Voto: </strong>
-                                        <i v-for="vote in Math.round(result.vote_average / 2)" class="fas fa-star"></i>
-                                        <i v-for="vote in 5 - Math.round(result.vote_average / 2)" class="far fa-star"></i>
-                                    </li>
-                                    <!-- /voto -->
+                        <!-- voto -->
+                        <li v-if="result.vote_average != 0" class="rating">
+                           <strong>Voto: </strong>
+                           <i v-for="vote in Math.round(result.vote_average / 2)" class="fas fa-star"></i>
+                           <i v-for="vote in 5 - Math.round(result.vote_average / 2)" class="far fa-star"></i>
+                        </li>
+                        <!-- /voto -->
 
-                                    <!-- genere -->
-                                    <li v-if="result.genre_ids.length > 0" class="genres">
-                                        <strong>Genere:</strong>
-                                        <span v-for="genre in result.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
-                                    </li>
-                                    <!-- /genere -->
+                        <!-- genere -->
+                        <li v-if="result.genre_ids.length > 0" class="genres">
+                           <strong>Genere:</strong>
+                           <span v-for="genre in result.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
+                        </li>
+                        <!-- /genere -->
 
 
-                                    <!-- trama -->
-                                    <li v-if="result.overview != ''" class="overview">
-                                        <strong>Trama:</strong>
-                                        {{ result.overview }}
-                                    </li>
-                                    <!-- /trama -->
+                        <!-- trama -->
+                        <li v-if="result.overview != ''" class="overview">
+                           <strong>Trama:</strong>
+                           {{ result.overview }}
+                        </li>
+                        <!-- /trama -->
 
-                                </ul>
-                            </div>
-                        </a>
-                        <!-- /CARDS DELLE RICERCHE -->
-                    </template>
-
-                    <!-- template da mostrare nel caso in cui la ricerca non produca risultati -->
-                    <template v-else>
-                        <div class="no-results">
-                            <h2>Mannaggia! Non ce l'abbiamo.</h2>
-                            <p>Prova a cercare altri film o serie tv.</p>
-                        </div>
-                    </template>
-                    <!--/ template da mostrare nel caso in cui la ricerca non produca risultati -->
-                </main>
-
-                <!-- jumbotrons da mostrare in base alla sezione della pagina selezionata -->
-                <main v-else>
-                    <img v-if="indexActive == 0 || indexActive == 1 || indexActive == 2" :src="'img/jumbotron' + indexActive + '.jpg'" alt="jumbotron" class="jumbo100">
-                </main>
-                <!-- /jumbotrons da mostrare in base alla sezione della pagina selezionata -->
+                     </ul>
+                  </div>
+               </a>
+               <!-- /CARDS DELLE RICERCHE -->
             </template>
 
-            <!-- trends -->
-            <template v-else-if="indexActive == 3">
-                    <section id="trend">
-                        <h3>Film popolari</h3>
-                        <div class="trend-movies">
-
-                            <!-- CARDS DEI FILM POPOLARI -->
-                            <a href="#" v-for="movie in trendMovies" class="card">
-                                <img :src="(movie.poster_path != undefined) ? poster + movie.poster_path : noImgFound" :alt="'locandina ' + movie.original_title" class="img100">
-                                <div class="layover">
-
-                                    <!-- addList btn -->
-                                    <span class="manage-userlist" @click="addItemToUserList(movie)">
-                                        <i class="fas fa-plus-square"></i>
-                                    </span>
-                                    <!-- /addList btn -->
-
-                                    <ul>
-                                        <!-- titolo -->
-                                        <li>
-                                            <strong>Titolo:</strong>
-                                            {{ movie.title || movie.name }}
-                                        </li>
-                                        <!-- titolo -->
-
-                                        <!-- titolo originale -->
-                                        <li v-if="movie.original_title != movie.title || movie.original_name != movie.name">
-                                            <strong>Titolo originale:</strong>
-                                            {{ movie.original_title || movie.original_name }}
-                                        </li>
-                                        <!-- /titolo originale -->
-
-                                        <!-- lingua -->
-                                        <li class="language">
-                                            <strong>Lingua:</strong>
-                                            <img v-if="movie.original_language == 'de' ||
-                                            movie.original_language == 'en' ||
-                                            movie.original_language == 'fr' ||
-                                            movie.original_language == 'it'" :src="'img/icons/' + movie.original_language + '.png'" alt="icon flag">
-                                            <span v-else>
-                                                {{ movie.original_language }}
-                                            </span>
-                                        </li>
-                                        <!-- /lingua -->
-
-                                        <!-- voto -->
-                                        <li v-if="movie.vote_average != 0" class="rating">
-                                            <strong>Voto: </strong>
-                                            <i v-for="vote in Math.round(movie.vote_average / 2)" class="fas fa-star"></i>
-                                            <i v-for="vote in 5 - Math.round(movie.vote_average / 2)" class="far fa-star"></i>
-                                        </li>
-                                        <!-- /voto -->
-
-                                        <!-- genere -->
-                                        <li v-if="movie.genre_ids.length > 0" class="genres">
-                                            <strong>Genere:</strong>
-                                            <span v-for="genre in movie.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
-                                        </li>
-                                        <!-- /genere -->
-
-
-                                        <!-- trama -->
-                                        <li v-if="movie.overview != ''" class="overview">
-                                            <strong>Trama:</strong>
-                                            {{ movie.overview }}
-                                        </li>
-                                        <!-- /trama -->
-
-                                    </ul>
-                                </div>
-                            </a>
-                            <!-- /CARDS DEI FILM POPOLARI -->
-                        </div>
-
-                        <h3 class="tv-title">Serie TV popolari</h3>
-                        <div class="trend-tv">
-
-                            <!-- CARDS DELLE SERIE POPOLARI -->
-                            <a href="#" v-for="tvShow in trendTv" class="card">
-                                <img :src="(tvShow.poster_path != undefined) ? poster + tvShow.poster_path : noImgFound" :alt="'locandina ' + tvShow.original_title" class="img100">
-                                <div class="layover">
-
-                                    <!-- addList btn -->
-                                    <span class="manage-userlist" @click="addItemToUserList(tvShow)">
-                                        <i class="fas fa-plus-square"></i>
-                                    </span>
-                                    <!-- /addList btn -->
-
-                                    <ul>
-                                        <!-- titolo -->
-                                        <li>
-                                            <strong>Titolo:</strong>
-                                            {{ tvShow.title || tvShow.name }}
-                                        </li>
-                                        <!-- titolo -->
-
-                                        <!-- titolo originale -->
-                                        <li v-if="tvShow.original_title != tvShow.title || tvShow.original_name != tvShow.name">
-                                            <strong>Titolo originale:</strong>
-                                            {{ tvShow.original_title || tvShow.original_name }}
-                                        </li>
-                                        <!-- /titolo originale -->
-
-                                        <!-- lingua -->
-                                        <li class="language">
-                                            <strong>Lingua:</strong>
-                                            <img v-if="tvShow.original_language == 'de' ||
-                                            tvShow.original_language == 'en' ||
-                                            tvShow.original_language == 'fr' ||
-                                            tvShow.original_language == 'it'" :src="'img/icons/' + tvShow.original_language + '.png'" alt="icon flag">
-                                            <span v-else>
-                                                {{ tvShow.original_language }}
-                                            </span>
-                                        </li>
-                                        <!-- /lingua -->
-
-                                        <!-- voto -->
-                                        <li v-if="tvShow.vote_average != 0" class="rating">
-                                            <strong>Voto: </strong>
-                                            <i v-for="vote in Math.round(tvShow.vote_average / 2)" class="fas fa-star"></i>
-                                            <i v-for="vote in 5 - Math.round(tvShow.vote_average / 2)" class="far fa-star"></i>
-                                        </li>
-                                        <!-- /voto -->
-
-                                        <!-- genere -->
-                                        <li v-if="tvShow.genre_ids.length > 0" class="genres">
-                                            <strong>Genere:</strong>
-                                            <span v-for="genre in tvShow.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
-                                        </li>
-                                        <!-- /genere -->
-
-
-                                        <!-- trama -->
-                                        <li v-if="tvShow.overview != ''" class="overview">
-                                            <strong>Trama:</strong>
-                                            {{ tvShow.overview }}
-                                        </li>
-                                        <!-- /trama -->
-
-                                    </ul>
-                                </div>
-                            </a>
-                            <!-- /CARDS DELLE SERIE POPOLARI -->
-                        </div>
-
-                    </section>
-            </template>
-            <!-- /trends -->
-
-
-            <!-- la mia lista -->
+            <!-- template da mostrare nel caso in cui la ricerca non produca risultati -->
             <template v-else>
-                <main v-if="userList.length < 1">
-                    <div class="no-results">
-                        <h2>La tua lista è vuota</h2>
-
-                        <p>Per aggiungere un elemento all tua lista, seleziona il film o la serie TV e premi sul segno <i class="fas fa-plus-square"></i></p>
-                    </div>
-                </main>
-
-                <main v-else>
-                    <!-- CARDS DELLA LISTA PREFERITI -->
-                    <a href="#" v-for="(item, index) in userList" class="card">
-                        <img :src="(item.poster_path != undefined) ? poster + item.poster_path : noImgFound" :alt="'locandina ' + item.original_title" class="img100">
-                        <div class="layover">
-                            <span class="manage-userlist" @click="removeItemToUserList(index)">
-                                <i class="fas fa-minus-square"></i>
-                            </span>
-                            <ul>
-                                <!-- titolo -->
-                                <li>
-                                    <strong>Titolo:</strong>
-                                    {{ item.title || item.name }}
-                                </li>
-                                <!-- titolo -->
-
-                                <!-- titolo originale -->
-                                <li v-if="item.original_title != item.title || item.original_name != item.name">
-                                    <strong>Titolo originale:</strong>
-                                    {{ item.original_title || item.original_name }}
-                                </li>
-                                <!-- /titolo originale -->
-
-                                <!-- lingua -->
-                                <li class="language">
-                                    <strong>Lingua:</strong>
-                                    <img v-if="item.original_language == 'de' ||
-                                    item.original_language == 'en' ||
-                                    item.original_language == 'fr' ||
-                                    item.original_language == 'it'" :src="'img/icons/' + item.original_language + '.png'" alt="icon flag">
-                                    <span v-else>
-                                        {{ item.original_language }}
-                                    </span>
-                                </li>
-                                <!-- /lingua -->
-
-                                <!-- voto -->
-                                <li v-if="item.vote_average != 0" class="rating">
-                                    <strong>Voto: </strong>
-                                    <i v-for="vote in Math.round(item.vote_average / 2)" class="fas fa-star"></i>
-                                    <i v-for="vote in 5 - Math.round(item.vote_average / 2)" class="far fa-star"></i>
-                                </li>
-                                <!-- /voto -->
-
-                                <!-- genere -->
-                                <li v-if="item.genre_ids.length > 0" class="genres">
-                                    <strong>Genere:</strong>
-                                    <span v-for="genre in item.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
-                                </li>
-                                <!-- /genere -->
-
-
-                                <!-- trama -->
-                                <li v-if="item.overview != ''" class="overview">
-                                    <strong>Trama:</strong>
-                                    {{ item.overview }}
-                                </li>
-                                <!-- /trama -->
-
-                            </ul>
-                        </div>
-                    </a>
-                    <!-- /CARDS DELLA LISTA PREFERITI -->
-                </main>
+               <div class="no-results">
+                  <h2>Mannaggia! Non ce l'abbiamo.</h2>
+                  <p>Prova a cercare altri film o serie tv.</p>
+               </div>
             </template>
-            <!-- /la mia lista -->
+            <!--/ template da mostrare nel caso in cui la ricerca non produca risultati -->
+         </main>
 
-        </div>
+         <!-- jumbotrons da mostrare in base alla sezione della pagina selezionata -->
+         <main v-else>
+            <img v-if="indexActive == 0 || indexActive == 1 || indexActive == 2" :src="'img/jumbotron' + indexActive + '.jpg'" alt="jumbotron" class="jumbo100">
+         </main>
+         <!-- /jumbotrons da mostrare in base alla sezione della pagina selezionata -->
+      </template>
 
-        <script src="js/main.js" charset="utf-8"></script>
-    </body>
+      <!-- trends -->
+      <template v-else-if="indexActive == 3">
+         <section id="trend">
+            <h3>Film popolari</h3>
+            <div class="trend-movies">
+
+               <!-- CARDS DEI FILM POPOLARI -->
+               <a href="#" v-for="movie in trendMovies" class="card">
+                  <img :src="(movie.poster_path != undefined) ? poster + movie.poster_path : noImgFound" :alt="'locandina ' + movie.original_title" class="img100">
+                  <div class="layover">
+
+                     <!-- addList btn -->
+                     <span class="manage-userlist" @click="addItemToUserList(movie)">
+                        <i class="fas fa-plus-square"></i>
+                     </span>
+                     <!-- /addList btn -->
+
+                     <ul>
+                        <!-- titolo -->
+                        <li>
+                           <strong>Titolo:</strong>
+                           {{ movie.title || movie.name }}
+                        </li>
+                        <!-- titolo -->
+
+                        <!-- titolo originale -->
+                        <li v-if="movie.original_title != movie.title || movie.original_name != movie.name">
+                           <strong>Titolo originale:</strong>
+                           {{ movie.original_title || movie.original_name }}
+                        </li>
+                        <!-- /titolo originale -->
+
+                        <!-- lingua -->
+                        <li class="language">
+                           <strong>Lingua:</strong>
+                           <img v-if="movie.original_language == 'de' ||
+                           movie.original_language == 'en' ||
+                           movie.original_language == 'fr' ||
+                           movie.original_language == 'it'" :src="'img/icons/' + movie.original_language + '.png'" alt="icon flag">
+                           <span v-else>
+                              {{ movie.original_language }}
+                           </span>
+                        </li>
+                        <!-- /lingua -->
+
+                        <!-- voto -->
+                        <li v-if="movie.vote_average != 0" class="rating">
+                           <strong>Voto: </strong>
+                           <i v-for="vote in Math.round(movie.vote_average / 2)" class="fas fa-star"></i>
+                           <i v-for="vote in 5 - Math.round(movie.vote_average / 2)" class="far fa-star"></i>
+                        </li>
+                        <!-- /voto -->
+
+                        <!-- genere -->
+                        <li v-if="movie.genre_ids.length > 0" class="genres">
+                           <strong>Genere:</strong>
+                           <span v-for="genre in movie.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
+                        </li>
+                        <!-- /genere -->
+
+
+                        <!-- trama -->
+                        <li v-if="movie.overview != ''" class="overview">
+                           <strong>Trama:</strong>
+                           {{ movie.overview }}
+                        </li>
+                        <!-- /trama -->
+
+                     </ul>
+                  </div>
+               </a>
+               <!-- /CARDS DEI FILM POPOLARI -->
+            </div>
+
+            <h3 class="tv-title">Serie TV popolari</h3>
+            <div class="trend-tv">
+
+               <!-- CARDS DELLE SERIE POPOLARI -->
+               <a href="#" v-for="tvShow in trendTv" class="card">
+                  <img :src="(tvShow.poster_path != undefined) ? poster + tvShow.poster_path : noImgFound" :alt="'locandina ' + tvShow.original_title" class="img100">
+                  <div class="layover">
+
+                     <!-- addList btn -->
+                     <span class="manage-userlist" @click="addItemToUserList(tvShow)">
+                        <i class="fas fa-plus-square"></i>
+                     </span>
+                     <!-- /addList btn -->
+
+                     <ul>
+                        <!-- titolo -->
+                        <li>
+                           <strong>Titolo:</strong>
+                           {{ tvShow.title || tvShow.name }}
+                        </li>
+                        <!-- titolo -->
+
+                        <!-- titolo originale -->
+                        <li v-if="tvShow.original_title != tvShow.title || tvShow.original_name != tvShow.name">
+                           <strong>Titolo originale:</strong>
+                           {{ tvShow.original_title || tvShow.original_name }}
+                        </li>
+                        <!-- /titolo originale -->
+
+                        <!-- lingua -->
+                        <li class="language">
+                           <strong>Lingua:</strong>
+                           <img v-if="tvShow.original_language == 'de' ||
+                           tvShow.original_language == 'en' ||
+                           tvShow.original_language == 'fr' ||
+                           tvShow.original_language == 'it'" :src="'img/icons/' + tvShow.original_language + '.png'" alt="icon flag">
+                           <span v-else>
+                              {{ tvShow.original_language }}
+                           </span>
+                        </li>
+                        <!-- /lingua -->
+
+                        <!-- voto -->
+                        <li v-if="tvShow.vote_average != 0" class="rating">
+                           <strong>Voto: </strong>
+                           <i v-for="vote in Math.round(tvShow.vote_average / 2)" class="fas fa-star"></i>
+                           <i v-for="vote in 5 - Math.round(tvShow.vote_average / 2)" class="far fa-star"></i>
+                        </li>
+                        <!-- /voto -->
+
+                        <!-- genere -->
+                        <li v-if="tvShow.genre_ids.length > 0" class="genres">
+                           <strong>Genere:</strong>
+                           <span v-for="genre in tvShow.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
+                        </li>
+                        <!-- /genere -->
+
+
+                        <!-- trama -->
+                        <li v-if="tvShow.overview != ''" class="overview">
+                           <strong>Trama:</strong>
+                           {{ tvShow.overview }}
+                        </li>
+                        <!-- /trama -->
+
+                     </ul>
+                  </div>
+               </a>
+               <!-- /CARDS DELLE SERIE POPOLARI -->
+            </div>
+
+         </section>
+      </template>
+      <!-- /trends -->
+
+
+      <!-- la mia lista -->
+      <template v-else>
+         <main v-if="userList.length < 1">
+            <div class="no-results">
+               <h2>La tua lista è vuota</h2>
+
+               <p>Per aggiungere un elemento all tua lista, seleziona il film o la serie TV e premi sul segno <i class="fas fa-plus-square"></i></p>
+            </div>
+         </main>
+
+         <main v-else>
+            <!-- CARDS DELLA LISTA PREFERITI -->
+            <a href="#" v-for="(item, index) in userList" class="card">
+               <img :src="(item.poster_path != undefined) ? poster + item.poster_path : noImgFound" :alt="'locandina ' + item.original_title" class="img100">
+               <div class="layover">
+                  <span class="manage-userlist" @click="removeItemToUserList(index)">
+                     <i class="fas fa-minus-square"></i>
+                  </span>
+                  <ul>
+                     <!-- titolo -->
+                     <li>
+                        <strong>Titolo:</strong>
+                        {{ item.title || item.name }}
+                     </li>
+                     <!-- titolo -->
+
+                     <!-- titolo originale -->
+                     <li v-if="item.original_title != item.title || item.original_name != item.name">
+                        <strong>Titolo originale:</strong>
+                        {{ item.original_title || item.original_name }}
+                     </li>
+                     <!-- /titolo originale -->
+
+                     <!-- lingua -->
+                     <li class="language">
+                        <strong>Lingua:</strong>
+                        <img v-if="item.original_language == 'de' ||
+                        item.original_language == 'en' ||
+                        item.original_language == 'fr' ||
+                        item.original_language == 'it'" :src="'img/icons/' + item.original_language + '.png'" alt="icon flag">
+                        <span v-else>
+                           {{ item.original_language }}
+                        </span>
+                     </li>
+                     <!-- /lingua -->
+
+                     <!-- voto -->
+                     <li v-if="item.vote_average != 0" class="rating">
+                        <strong>Voto: </strong>
+                        <i v-for="vote in Math.round(item.vote_average / 2)" class="fas fa-star"></i>
+                        <i v-for="vote in 5 - Math.round(item.vote_average / 2)" class="far fa-star"></i>
+                     </li>
+                     <!-- /voto -->
+
+                     <!-- genere -->
+                     <li v-if="item.genre_ids.length > 0" class="genres">
+                        <strong>Genere:</strong>
+                        <span v-for="genre in item.genre_ids" v-if="isNaN(genre)">{{ genre }}</span>
+                     </li>
+                     <!-- /genere -->
+
+
+                     <!-- trama -->
+                     <li v-if="item.overview != ''" class="overview">
+                        <strong>Trama:</strong>
+                        {{ item.overview }}
+                     </li>
+                     <!-- /trama -->
+
+                  </ul>
+               </div>
+            </a>
+            <!-- /CARDS DELLA LISTA PREFERITI -->
+         </main>
+      </template>
+      <!-- /la mia lista -->
+
+   </div>
+
+   <script src="js/main.js" charset="utf-8"></script>
+</body>
 </html>
