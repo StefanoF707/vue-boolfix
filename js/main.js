@@ -88,9 +88,11 @@ let app = new Vue (
          moveActiveClass: function (i) {
             this.indexActive = i;
             this.axiosCall = false;
-            this.trendsCall = true;
             if (this.indexActive == 3) {
+               this.trendsCall = true;
                this.getTrends();
+            } else {
+               this.trendsCall = false;
             }
             this.query = "";
          },
