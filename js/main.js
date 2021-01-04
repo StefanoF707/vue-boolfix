@@ -16,6 +16,7 @@ let app = new Vue (
          sectionShower : ["Tutti", "Serie TV", "Film", "Nuovi e popolari", "La mia lista"],
          results: [],
          genresArray: [],
+         genresNames: [],
          userList: [],
          trendMovies: [],
          trendTv: [],
@@ -23,6 +24,7 @@ let app = new Vue (
          searchQuery: "",
          openSearchField: false,
          axiosCall: false,
+         trendsCall: false,
          indexActive: 0,
          genreSelected: "",
       },
@@ -71,7 +73,9 @@ let app = new Vue (
                   this.results.forEach( (element) => {
                      this.genresArray.forEach( (el) => {
                         if (element.genre_ids.includes(el.id)) {
-                           element.genre_ids.push(el.name);
+                           if (!element.genre_ids.includes(el.name)) {
+                              element.genre_ids.push(el.name);
+                           }
                         }
                      } );
                   } );
@@ -84,6 +88,10 @@ let app = new Vue (
          moveActiveClass: function (i) {
             this.indexActive = i;
             this.axiosCall = false;
+            this.trendsCall = true;
+            if (this.indexActive == 3) {
+               this.getTrends();
+            }
             this.query = "";
          },
 
@@ -102,7 +110,12 @@ let app = new Vue (
                   }
                }).then( (tvResponse) => {
                   this.genresArray = [...moviesResponse.data.genres, ...tvResponse.data.genres];
-                  console.log(this.genresArray);
+
+                  this.genresArray.forEach( (element) => {
+                     if (!this.genresNames.includes(element.name)) {
+                        this.genresNames.push(element.name);
+                     }
+                  } );
                } );
             } );
          },
@@ -132,26 +145,29 @@ let app = new Vue (
                }
             }).then( (trendResponse) => {
 
-               trendResponse.data.results.forEach( (element) => {
-                  this.genresArray.forEach( (el) => {
-                     if (element.genre_ids.includes(el.id)) {
-                        element.genre_ids.push(el.name);
+               if (this.trendsCall) {
+                  trendResponse.data.results.forEach( (element) => {
+                     this.genresArray.forEach( (el) => {
+                        if (element.genre_ids.includes(el.id)) {
+                           if (!element.genre_ids.includes(el.name)) {
+                              element.genre_ids.push(el.name);
+                           }
+                        }
+                     } );
+                     if (element.media_type == "movie") {
+                        this.trendMovies.push(element);
+                     } else if (element.media_type == "tv") {
+                        this.trendTv.push(element);
                      }
                   } );
-                  if (element.media_type == "movie") {
-                     this.trendMovies.push(element);
-                  } else if (element.media_type == "tv") {
-                     this.trendTv.push(element);
-                  }
-               } );
-            } )
+               }
 
-         }
+            } );
+         },
 
       },
       created: function () {
          this.getGenresByAxiosCall();
-         this.getTrends();
       },
    }
 );

@@ -69,7 +69,7 @@
                <!-- Selettore di generi -->
                <select v-model="genreSelected" class="genre-selector">
                   <option value="">Tutti i generi</option>
-                  <option v-for="genre in genresArray" :value="genre.name">{{ genre.name }}</option>
+                  <option v-for="genre in genresNames" :value="genre">{{ genre }}</option>
                </select>
                <!-- /Selettore di generi -->
 
