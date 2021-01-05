@@ -127,6 +127,12 @@
                         </li>
                         <!-- /genere -->
 
+                        <!-- cast -->
+                        <li v-if="result.cast.length > 0" class="cast">
+                           <strong>Cast:</strong>
+                           <span v-for="actor in result.cast">{{ actor }}</span>
+                        </li>
+                        <!-- /cast -->
 
                         <!-- trama -->
                         <li v-if="result.overview != ''" class="overview">
@@ -220,6 +226,12 @@
                         </li>
                         <!-- /genere -->
 
+                        <!-- cast -->
+                        <li v-if="movie.cast.length > 0" class="cast">
+                           <strong>Cast:</strong>
+                           <span v-for="actor in movie.cast">{{ actor }}</span>
+                        </li>
+                        <!-- /cast -->
 
                         <!-- trama -->
                         <li v-if="movie.overview != ''" class="overview">
@@ -291,6 +303,12 @@
                         </li>
                         <!-- /genere -->
 
+                        <!-- cast -->
+                        <li v-if="tvShow.cast.length > 0" class="cast">
+                           <strong>Cast:</strong>
+                           <span v-for="actor in tvShow.cast">{{ actor }}</span>
+                        </li>
+                        <!-- /cast -->
 
                         <!-- trama -->
                         <li v-if="tvShow.overview != ''" class="overview">
@@ -371,6 +389,12 @@
                      </li>
                      <!-- /genere -->
 
+                     <!-- cast -->
+                     <li v-if="item.cast.length > 0" class="cast">
+                        <strong>Cast:</strong>
+                        <span v-for="actor in item.cast">{{ actor }}</span>
+                     </li>
+                     <!-- /cast -->
 
                      <!-- trama -->
                      <li v-if="item.overview != ''" class="overview">

@@ -280,6 +280,12 @@ main .genre-selector > option {
 .layover li.genres > span:last-child::after {
    content: ".";
 }
+.layover li.cast > span::after {
+   content: ", ";
+}
+.layover li.cast > span:last-child::after {
+   content: ".";
+}
 
 .layover li.overview {
    max-height: 30%;

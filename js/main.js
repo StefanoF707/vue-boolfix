@@ -43,6 +43,13 @@ let app = new Vue (
             })
             .then( (moviesResponse) => {
 
+               let movies = moviesResponse.data.results;
+
+               movies.forEach( (movie) => {
+                  movie.cast = [];
+                  this.getCast(movie, "movie");
+               } );
+
                axios.get(this.tvSeriesUrl, {
                   params: {
                      api_key: this.my_api_key,
@@ -52,12 +59,19 @@ let app = new Vue (
                   }
                }).then( (seriesResponse) => {
 
+                  let series = seriesResponse.data.results;
+
+                  series.forEach( (tvShow) => {
+                     tvShow.cast = [];
+                     this.getCast(tvShow, "tv");
+                  } );
+
                   if (this.indexActive == 0) {
-                     this.results = [...seriesResponse.data.results, ...moviesResponse.data.results];
+                     this.results = [...series, ...movies];
                   } else if (this.indexActive == 1) {
-                     this.results = seriesResponse.data.results;
+                     this.results = series;
                   } else if (this.indexActive == 2) {
-                     this.results = moviesResponse.data.results;
+                     this.results = movies;
                   }
 
                   this.results.sort(function(a, b) {
@@ -68,7 +82,6 @@ let app = new Vue (
                      this.results.pop();
                   }
 
-                  this.axiosCall = true;
 
                   this.results.forEach( (element) => {
                      this.genresArray.forEach( (el) => {
@@ -78,7 +91,10 @@ let app = new Vue (
                            }
                         }
                      } );
+
                   } );
+
+                  this.axiosCall = true;
                } );
             } );
 
@@ -115,6 +131,7 @@ let app = new Vue (
                         this.genresNames.push(element.name);
                      }
                   } );
+
                } );
             } );
          },
@@ -145,6 +162,7 @@ let app = new Vue (
             }).then( (trendResponse) => {
 
                trendResponse.data.results.forEach( (element) => {
+                  element.cast = [];
                   this.genresArray.forEach( (el) => {
                      if (element.genre_ids.includes(el.id)) {
                         if (!element.genre_ids.includes(el.name)) {
@@ -153,8 +171,10 @@ let app = new Vue (
                      }
                   } );
                   if (element.media_type == "movie") {
+                     this.getCast(element, "movie");
                      this.trendMovies.push(element);
                   } else if (element.media_type == "tv") {
+                     this.getCast(element, "tv");
                      this.trendTv.push(element);
                   }
                } );
@@ -164,6 +184,24 @@ let app = new Vue (
             } );
          },
 
+         getCast: function (el, show) {
+            axios.get("https://api.themoviedb.org/3/" + show + "/" + el.id + "/credits?", {
+               params: {
+                  api_key: this.my_api_key,
+                  language: "it-IT",
+               }
+            }).then( (response) => {
+               let castArray = response.data.cast;
+               let castNames = [];
+               castArray.slice(0, 5).forEach( (person) => {
+                  castNames.push(person.name);
+               } );
+               el.cast = castNames;
+               this.$forceUpdate();
+            } )
+         }
+
+
       },
       created: function () {
          this.getGenresByAxiosCall();
@@ -171,5 +209,4 @@ let app = new Vue (
    }
 );
 
-// CAST
 // RESPONSIVE
