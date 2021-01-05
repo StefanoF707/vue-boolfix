@@ -12,8 +12,8 @@ let app = new Vue (
          poster: "https://image.tmdb.org/t/p/w780",
          noImgFound: "img/img-not-available.png",
          pages: 1,
-         // /UTILITIES
          sectionShower : ["Tutti", "Serie TV", "Film", "Nuovi e popolari", "La mia lista"],
+         // /UTILITIES
          results: [],
          genresArray: [],
          genresNames: [],
@@ -88,11 +88,8 @@ let app = new Vue (
          moveActiveClass: function (i) {
             this.indexActive = i;
             this.axiosCall = false;
-            if (this.indexActive == 3) {
-               this.trendsCall = true;
+            if (this.indexActive == 3 && !this.trendsCall) {
                this.getTrends();
-            } else {
-               this.trendsCall = false;
             }
             this.query = "";
          },
@@ -147,22 +144,22 @@ let app = new Vue (
                }
             }).then( (trendResponse) => {
 
-               if (this.trendsCall) {
-                  trendResponse.data.results.forEach( (element) => {
-                     this.genresArray.forEach( (el) => {
-                        if (element.genre_ids.includes(el.id)) {
-                           if (!element.genre_ids.includes(el.name)) {
-                              element.genre_ids.push(el.name);
-                           }
+               trendResponse.data.results.forEach( (element) => {
+                  this.genresArray.forEach( (el) => {
+                     if (element.genre_ids.includes(el.id)) {
+                        if (!element.genre_ids.includes(el.name)) {
+                           element.genre_ids.push(el.name);
                         }
-                     } );
-                     if (element.media_type == "movie") {
-                        this.trendMovies.push(element);
-                     } else if (element.media_type == "tv") {
-                        this.trendTv.push(element);
                      }
                   } );
-               }
+                  if (element.media_type == "movie") {
+                     this.trendMovies.push(element);
+                  } else if (element.media_type == "tv") {
+                     this.trendTv.push(element);
+                  }
+               } );
+
+               this.trendsCall = true;
 
             } );
          },
