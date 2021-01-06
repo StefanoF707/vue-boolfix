@@ -29,11 +29,28 @@
 
             <!-- navbar contenente la lista delle sezioni del sito -->
             <nav class="header-right-nav">
-               <ul class="list-inline">
-                  <li v-for="(type, index) in sectionShower" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">
-                     {{ type }}
-                  </li>
-               </ul>
+               <div class="lg-screen">
+                  <ul class="list-inline">
+                     <li v-for="(type, index) in sectionShower" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">
+                        {{ type }}
+                     </li>
+                  </ul>
+               </div>
+               <div class="smaller-screen">
+                  <span class="hamburger-icon" @click="cascadingMenuShower">
+                     <i v-if="!cascadingMenu" class="fas fa-bars"></i>
+                     <i v-else class="fas fa-times"></i>
+                  </span>
+                  <template v-if="cascadingMenu">
+                     <div class="cascading-menu">
+                        <ul>
+                           <li v-for="(type, index) in sectionShower" :class="(index == indexActive) ? 'active-page' : ''" @click="moveActiveClass(index)">
+                              {{ type }}
+                           </li>
+                        </ul>
+                     </div>
+                  </template>
+               </div>
             </nav>
             <!-- /navbar contenente la lista delle sezioni del sito -->
 

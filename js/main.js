@@ -27,6 +27,7 @@ let app = new Vue (
          trendsCall: false,
          indexActive: 0,
          genreSelected: "",
+         cascadingMenu: false,
       },
       methods: {
 
@@ -199,8 +200,15 @@ let app = new Vue (
                el.cast = castNames;
                this.$forceUpdate();
             } )
-         }
+         },
 
+         cascadingMenuShower: function () {
+            if (!this.cascadingMenu) {
+               this.cascadingMenu = true;
+            } else {
+               this.cascadingMenu = false;
+            }
+         },
 
       },
       created: function () {

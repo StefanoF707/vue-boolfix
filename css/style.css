@@ -71,6 +71,7 @@ header {
    top: 0;
    left: 0;
    background: linear-gradient(to bottom, #000, #171616);
+   z-index: 2;
 }
 .header-left {
    display: flex;
@@ -89,6 +90,10 @@ header {
    align-items: center;
    width: calc(100% - 100px);
    padding: 0 20px;
+}
+
+nav.header-right-nav > .smaller-screen {
+   display: none;
 }
 
 nav.header-right-nav li {
@@ -210,7 +215,7 @@ main .genre-selector > option {
 
 .card {
    width: calc(100% / 4 - 40px);
-   height: 405px;
+   height: 415px;
    position: relative;
    margin: 45px 20px 10px;
    font-size: 0;
@@ -317,4 +322,72 @@ main .genre-selector > option {
    flex-wrap: wrap;
    align-items: flex-start;
    padding-bottom: 20px;
+}
+
+
+@media screen and (min-width: 1399px) {
+   .card {
+      width: calc(100% / 5 - 40px);
+   }
+
+   .card > .layover {
+      font-size: 13px;
+   }
+}
+
+@media screen and (max-width: 1050px) {
+   .card {
+      width: calc(100% / 3 - 40px);
+   }
+
+   .card > .layover {
+      font-size: 13px;
+   }
+
+   .header-right-nav > .lg-screen {
+      display: none;
+   }
+   nav.header-right-nav > .smaller-screen {
+      display: block;
+      position: relative;
+   }
+
+   .smaller-screen > .hamburger-icon {
+      color: #cdcdcd;
+      cursor: pointer;
+      font-size: 20px;
+      transition: color 0.3s;
+   }
+   .smaller-screen > .hamburger-icon:hover {
+      color: #e50914;
+   }
+
+   .smaller-screen > .cascading-menu {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background: #000;
+      width: 150px;
+      border-radius: 10px;
+      box-shadow: 1px 1px 15px 0px #000;
+   }
+
+   .smaller-screen > .cascading-menu li {
+      padding: 10px 5px;
+      border-bottom: 1px solid #cdcdcd;
+   }
+   .smaller-screen > .cascading-menu li:last-child {
+      border: 0;
+   }
+}
+
+@media screen and (max-width: 850px) {
+   .card {
+      width: calc(100% / 2 - 40px);
+      height: 450px;
+   }
+
+   .card > .layover {
+      font-size: 12px;
+   }
 }
