@@ -213,6 +213,7 @@ let app = new Vue (
       },
       created: function () {
          this.getGenresByAxiosCall();
+         this.getTrends()
       },
    }
 );
