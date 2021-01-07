@@ -155,6 +155,8 @@ let app = new Vue (
 
          getTrends: function () {
 
+            this.getGenresByAxiosCall();
+
             axios.get(this.trendUrl, {
                params: {
                   api_key: this.my_api_key,
@@ -213,7 +215,6 @@ let app = new Vue (
       },
       created: function () {
          this.getGenresByAxiosCall();
-         this.getTrends()
       },
    }
 );
