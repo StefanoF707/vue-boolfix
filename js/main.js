@@ -4,11 +4,6 @@ let app = new Vue (
       data: {
          // UTILITIES
          my_api_key: "abe738a72b875634baa4e3568faa8280",
-         movieGenresUrl: "https://api.themoviedb.org/3/genre/movie/list?",
-         tvGenresUrl: "https://api.themoviedb.org/3/genre/tv/list?",
-         moviesUrl: "https://api.themoviedb.org/3/search/movie?",
-         tvSeriesUrl: "https://api.themoviedb.org/3/search/tv?",
-         trendUrl: "https://api.themoviedb.org/3/trending/all/week?",
          poster: "https://image.tmdb.org/t/p/w780",
          noImgFound: "img/img-not-available.png",
          pages: 1,
@@ -34,7 +29,7 @@ let app = new Vue (
          getQueryByInput: function () {
             this.query = this.searchQuery;
 
-            axios.get(this.moviesUrl, {
+            axios.get("https://api.themoviedb.org/3/search/movie?", {
                params: {
                   api_key: this.my_api_key,
                   query: this.query,
@@ -51,7 +46,7 @@ let app = new Vue (
                   this.getCast(movie, "movie");
                } );
 
-               axios.get(this.tvSeriesUrl, {
+               axios.get("https://api.themoviedb.org/3/search/tv?", {
                   params: {
                      api_key: this.my_api_key,
                      query: this.query,
@@ -112,14 +107,14 @@ let app = new Vue (
          },
 
          getGenresByAxiosCall: function () {
-            axios.get(this.movieGenresUrl, {
+            axios.get("https://api.themoviedb.org/3/genre/movie/list?", {
                params: {
                   api_key: this.my_api_key,
                   language: "it-IT",
                }
             }).then( (moviesResponse) => {
 
-               axios.get(this.tvGenresUrl, {
+               axios.get("https://api.themoviedb.org/3/genre/tv/list?", {
                   params: {
                      api_key: this.my_api_key,
                      language: "it-IT",
@@ -157,7 +152,7 @@ let app = new Vue (
 
             this.getGenresByAxiosCall();
 
-            axios.get(this.trendUrl, {
+            axios.get("https://api.themoviedb.org/3/trending/all/week?", {
                params: {
                   api_key: this.my_api_key,
                   language: "it-IT",
@@ -188,7 +183,7 @@ let app = new Vue (
          },
 
          getCast: function (el, show) {
-            axios.get("https://api.themoviedb.org/3/" + show + "/" + el.id + "/credits?", {
+            axios.get(`https://api.themoviedb.org/3/${show}/${el.id}/credits?`, {
                params: {
                   api_key: this.my_api_key,
                   language: "it-IT",
