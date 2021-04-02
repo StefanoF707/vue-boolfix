@@ -214,12 +214,14 @@ main .genre-selector > option {
 }
 
 .card {
-   width: calc(100% / 4 - 40px);
+   width: calc(100% / 4 - 20px);
    height: 415px;
    position: relative;
-   margin: 45px 20px 10px;
+   margin: 45px 10px 10px;
    font-size: 0;
    border: 2px solid #fff;
+   border-radius: 20px;
+   overflow: hidden;
 }
 .card::before {
    content: "";
@@ -254,7 +256,7 @@ main .genre-selector > option {
 .layover > .manage-userlist {
    position: absolute;
    top: 5px;
-   right: 5px;
+   right: 10px;
    font-size: 20px;
    transition: 0.3s;
 }
